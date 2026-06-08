@@ -350,7 +350,7 @@ function navHTML(prefix='') {
   <nav class="nav" id="main-nav">
     <div class="nav-inner">
       <a href="${prefix}index.html" class="nav-logo">
-        <i class="fa-solid fa-paw paw"></i> HelloKitty
+        <i class="fa-solid fa-paw paw"></i> <p>HelloKitty</p> 
       </a>
       <div class="nav-links">
         <a href="${prefix}index.html">Home</a>

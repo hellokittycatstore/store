@@ -392,6 +392,7 @@ p { font-size: 15px; line-height: 1.8; color: var(--text-mid); }
   .container { padding: 0 24px; }
 }
 @media (max-width: 768px) {
+  .nav-logo p{display: none;}
   .nav-links { display: none; }
   .hamburger { display: flex; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
