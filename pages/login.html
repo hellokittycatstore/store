@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In — HelloKitty</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body { background: var(--cream); }
+
+    .auth-layout {
+      min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    }
+
+    /* ── LEFT PANEL ── */
+    .auth-visual {
+      position: relative; overflow: hidden;
+      background: var(--brown-deep);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 60px;
+    }
+    .auth-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?w=900&q=80');
+      background-size: cover; background-position: center;
+      opacity: 0.35;
+    }
+    .auth-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, rgba(44,24,16,0.3) 0%, rgba(44,24,16,0.85) 100%);
+    }
+    .auth-visual-content { position: relative; z-index: 2; }
+    .auth-logo { display: flex; align-items: center; gap: 10px; font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: #fff; position: absolute; top: 48px; left: 60px; z-index: 2; text-decoration: none; }
+    .auth-quote { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 3.5vw, 46px); font-weight: 700; color: #fff; line-height: 1.15; margin-bottom: 20px; }
+    .auth-quote em { color: var(--amber-light); font-style: italic; }
+    .auth-stars { color: var(--amber); font-size: 18px; letter-spacing: 3px; margin-bottom: 12px; }
+    .auth-cite { font-size: 14px; color: rgba(255,255,255,0.5); }
+
+    /* ── RIGHT PANEL ── */
+    .auth-form-panel {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 60px 72px; background: var(--warm-white);
+    }
+    .auth-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 36px; }
+    .auth-tab {
+      flex: 1; padding: 14px; text-align: center;
+      font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+      color: var(--text-muted); cursor: pointer; border: none; background: none;
+      border-bottom: 2px solid transparent; margin-bottom: -2px; transition: var(--transition);
+    }
+    .auth-tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; }
+
+    .auth-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 700; color: var(--brown-deep); margin-bottom: 6px; }
+    .auth-sub { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+
+    .divider {
+      display: flex; align-items: center; gap: 14px;
+      margin: 24px 0; color: var(--text-muted); font-size: 12px; font-weight: 600; letter-spacing: 1px;
+    }
+    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    .social-login { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+    .social-login-btn {
+      width: 100%; padding: 13px; border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border); background: #fff; cursor: pointer;
+      font-size: 14px; font-weight: 600; color: var(--brown-deep);
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      transition: var(--transition);
+    }
+    .social-login-btn:hover { border-color: var(--amber); background: var(--amber-pale); }
+    .social-login-btn img { width: 20px; height: 20px; }
+
+    .password-wrap { position: relative; }
+    .toggle-pw {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 15px;
+      transition: var(--transition);
+    }
+    .toggle-pw:hover { color: var(--amber); }
+
+    .forgot-link { font-size: 13px; color: var(--amber); font-weight: 600; text-align: right; display: block; margin-top: -12px; margin-bottom: 24px; }
+    .forgot-link:hover { text-decoration: underline; }
+
+    .terms-text { font-size: 12px; color: var(--text-muted); margin-top: 16px; text-align: center; line-height: 1.7; }
+    .terms-text a { color: var(--amber); font-weight: 600; }
+
+    @media (max-width: 1024px) {
+      .auth-form-panel { padding: 60px 48px; }
+    }
+    @media (max-width: 768px) {
+      .auth-layout { grid-template-columns: 1fr; }
+      .auth-visual { display: none; }
+      .auth-form-panel { padding: 100px 28px 60px; min-height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+<script src="../js/main.js"></script>
+<script>document.write(cartDrawerHTML());</script>
+
+<!-- NAV (minimal on auth pages) -->
+<nav class="nav" id="main-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <i class="fa-solid fa-paw paw"></i> HelloKitty
+    </a>
+    <div style="display:flex;gap:14px;align-items:center;font-size:13px;color:var(--text-muted)">
+      Need help? <a href="contact.html" style="color:var(--amber);font-weight:700">Contact Us</a>
+    </div>
+  </div>
+</nav>
+
+<div class="auth-layout">
+  <!-- VISUAL -->
+  <div class="auth-visual">
+    <div class="auth-bg"></div>
+    <div class="auth-overlay"></div>
+    <a href="../index.html" class="auth-logo"><i class="fa-solid fa-paw"></i> HelloKitty</a>
+    <div class="auth-visual-content">
+      <div class="auth-stars">★★★★★</div>
+      <div class="auth-quote">"Duchess arrived healthy, <em>happy,</em> and exactly as described. HelloKitty is the real deal."</div>
+      <div class="auth-cite">— Amaka O., Lagos · Persian owner since 2023</div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="auth-form-panel">
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-panel="signin">Sign In</button>
+      <button class="auth-tab" data-panel="register">Create Account</button>
+    </div>
+
+    <!-- SIGN IN -->
+    <div class="auth-panel active" id="panel-signin">
+      <h2 class="auth-title">Welcome back</h2>
+      <p class="auth-sub">Sign in to track orders, manage your wishlist, and access your vet hotline.</p>
+
+      <div class="social-login">
+        <button class="social-login-btn" onclick="showToast('Google sign-in coming soon!','info')">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+      </div>
+      <div class="divider">or sign in with email</div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="you@email.com" id="signin-email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="password-wrap">
+          <input type="password" class="form-input" placeholder="••••••••" id="signin-pw">
+          <button class="toggle-pw" onclick="togglePw('signin-pw',this)" tabindex="-1"><i class="fa-regular fa-eye"></i></button>
+        </div>
+      </div>
+      <a href="#" class="forgot-link">Forgot password?</a>
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center" id="signin-btn">
+        Sign In <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <p class="terms-text">By signing in you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+    </div>
+
+    <!-- REGISTER -->
+    <div class="auth-panel" id="panel-register">
+      <h2 class="auth-title">Create an account</h2>
+      <p class="auth-sub">Join the HelloKitty family. Save wishlists, track orders and access lifetime vet support.</p>
+
+      <div class="social-login">
+        <button class="social-login-btn" onclick="showToast('Google sign-up coming soon!','info')">
+          <svg width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Sign up with Google
+        </button>
+      </div>
+      <div class="divider">or register with email</div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-input" placeholder="Adaeze" id="reg-fn">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-input" placeholder="Okafor" id="reg-ln">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="you@email.com" id="reg-email">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" placeholder="+234 800 000 0000" id="reg-phone">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="password-wrap">
+          <input type="password" class="form-input" placeholder="Min. 8 characters" id="reg-pw">
+          <button class="toggle-pw" onclick="togglePw('reg-pw',this)" tabindex="-1"><i class="fa-regular fa-eye"></i></button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center" id="reg-btn">
+        Create Account <i class="fa-solid fa-arrow-right"></i>
+      </button>
+      <p class="terms-text">By creating an account you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Tab switching
+  document.querySelectorAll('.auth-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+    });
+  });
+
+  // Toggle password visibility
+  function togglePw(id, btn) {
+    const inp = document.getElementById(id);
+    if (inp.type === 'password') {
+      inp.type = 'text';
+      btn.innerHTML = '<i class="fa-regular fa-eye-slash"></i>';
+    } else {
+      inp.type = 'password';
+      btn.innerHTML = '<i class="fa-regular fa-eye"></i>';
+    }
+  }
+
+  // Sign in
+  document.getElementById('signin-btn').addEventListener('click', () => {
+    const email = document.getElementById('signin-email').value;
+    const pw = document.getElementById('signin-pw').value;
+    if (!email.includes('@')) { showToast('Please enter a valid email.', 'error'); return; }
+    if (pw.length < 6) { showToast('Password must be at least 6 characters.', 'error'); return; }
+    document.getElementById('signin-btn').innerHTML = '<i class="fa-solid fa-circle-check"></i> Signed In!';
+    document.getElementById('signin-btn').disabled = true;
+    showToast('Welcome back to HelloKitty! 🐾', 'success');
+    setTimeout(() => window.location.href = '../index.html', 1800);
+  });
+
+  // Register
+  document.getElementById('reg-btn').addEventListener('click', () => {
+    const email = document.getElementById('reg-email').value;
+    const pw = document.getElementById('reg-pw').value;
+    const fn = document.getElementById('reg-fn').value;
+    if (!fn.trim()) { showToast('Please enter your first name.', 'error'); return; }
+    if (!email.includes('@')) { showToast('Please enter a valid email.', 'error'); return; }
+    if (pw.length < 8) { showToast('Password must be at least 8 characters.', 'error'); return; }
+    document.getElementById('reg-btn').innerHTML = '<i class="fa-solid fa-circle-check"></i> Account Created!';
+    document.getElementById('reg-btn').disabled = true;
+    showToast(`Welcome to HelloKitty, ${fn}! 🐾`, 'success');
+    setTimeout(() => window.location.href = '../index.html', 1800);
+  });
+
+  window.addEventListener('scroll', () => {
+    document.getElementById('main-nav')?.classList.toggle('scrolled', window.scrollY > 10);
+  });
+</script>
+</body>
+</html>

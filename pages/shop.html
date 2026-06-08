@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Cats — HelloKitty</title>
+  <meta name="description" content="Browse our full collection of pedigree kittens from certified breeders. Persian, Maine Coon, Siamese, Ragdoll and more.">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* ── SHOP LAYOUT ── */
+    .shop-layout { display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: start; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: sticky; top: calc(var(--nav-h) + 24px);
+      background: var(--warm-white); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); overflow: hidden;
+    }
+    .sidebar-header {
+      padding: 22px 24px; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .sidebar-header h4 { color: var(--brown-deep); margin: 0; font-size: 18px; }
+    .clear-filters {
+      font-size: 12px; font-weight: 600; color: var(--amber); cursor: pointer;
+      background: none; border: none; letter-spacing: 0.5px;
+    }
+    .sidebar-section { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+    .sidebar-section:last-child { border-bottom: none; }
+    .sidebar-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 14px; display: block;
+    }
+    .filter-check {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+      cursor: pointer; font-size: 14px; color: var(--text-mid); font-weight: 500;
+    }
+    .filter-check input { accent-color: var(--amber); width: 16px; height: 16px; cursor: pointer; }
+    .filter-check:hover { color: var(--brown-deep); }
+    .filter-check .count {
+      margin-left: auto; background: var(--cream); border-radius: 20px;
+      padding: 2px 8px; font-size: 11px; color: var(--text-muted);
+    }
+    .price-range { display: flex; flex-direction: column; gap: 12px; }
+    .price-slider {
+      -webkit-appearance: none; width: 100%; height: 4px;
+      background: linear-gradient(to right, var(--amber) 0%, var(--amber) 70%, var(--border-strong) 70%);
+      border-radius: 4px; outline: none; cursor: pointer;
+    }
+    .price-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; width: 18px; height: 18px;
+      background: var(--amber); border-radius: 50%; cursor: pointer;
+      box-shadow: 0 2px 8px rgba(196,122,53,0.4);
+    }
+    .price-labels { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: var(--brown-deep); }
+
+    /* ── SHOP MAIN ── */
+    .shop-toolbar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; gap: 16px; flex-wrap: wrap;
+    }
+    .shop-count { font-size: 14px; color: var(--text-muted); }
+    .shop-count strong { color: var(--brown-deep); }
+    .toolbar-right { display: flex; gap: 12px; align-items: center; }
+    .sort-select {
+      padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      background: var(--warm-white); color: var(--brown-deep); font-size: 13px;
+      font-family: 'Jost', sans-serif; font-weight: 600; cursor: pointer; outline: none;
+      transition: var(--transition);
+    }
+    .sort-select:focus { border-color: var(--amber); }
+    .view-toggle { display: flex; gap: 4px; }
+    .view-btn {
+      width: 38px; height: 38px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      background: var(--warm-white); border: 1.5px solid var(--border);
+      cursor: pointer; color: var(--text-muted); transition: var(--transition);
+    }
+    .view-btn.active { background: var(--amber); color: #fff; border-color: var(--amber); }
+
+    /* Search bar */
+    .search-wrap {
+      position: relative; margin-bottom: 28px;
+    }
+    .search-input {
+      width: 100%; padding: 13px 16px 13px 44px;
+      border: 1.5px solid var(--border); border-radius: var(--radius-sm);
+      background: var(--warm-white); font-size: 14px; font-family: 'Jost', sans-serif;
+      color: var(--text-dark); outline: none; transition: var(--transition);
+    }
+    .search-input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(196,122,53,0.12); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 15px; }
+
+    /* Grid & List view */
+    .cat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .cat-grid.list-view { grid-template-columns: 1fr; }
+    .cat-grid.list-view .cat-card {
+      display: grid; grid-template-columns: 280px 1fr; border-radius: var(--radius-md);
+    }
+    .cat-grid.list-view .cat-card-img-wrap { height: 100%; min-height: 220px; border-radius: var(--radius-md) 0 0 var(--radius-md); }
+    .cat-grid.list-view .cat-card-body { display: flex; flex-direction: column; justify-content: space-between; }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1/-1; text-align: center; padding: 80px 40px;
+      color: var(--text-muted);
+    }
+    .empty-state i { font-size: 56px; margin-bottom: 20px; display: block; opacity: 0.4; }
+    .empty-state h3 { color: var(--brown-deep); margin-bottom: 12px; }
+
+    /* Active filter tags */
+    .active-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .filter-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--amber-pale); border: 1px solid rgba(196,122,53,0.3);
+      color: var(--amber); font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: 20px;
+    }
+    .filter-tag button { background: none; border: none; cursor: pointer; color: var(--amber); font-size: 12px; }
+
+    @media (max-width: 1024px) {
+      .shop-layout { grid-template-columns: 240px 1fr; gap: 24px; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .shop-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; display: none; }
+      .sidebar.mobile-open { display: block; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .cat-grid.list-view { grid-template-columns: 1fr; }
+      .cat-grid.list-view .cat-card { grid-template-columns: 1fr; }
+      .cat-grid.list-view .cat-card-img-wrap { border-radius: var(--radius-md) var(--radius-md) 0 0; }
+    }
+    @media (max-width: 480px) {
+      .cat-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  
+<script src="../js/main.js"></script>
+<script>document.write(navHTML('../'));</script>
+<script>document.write(cartDrawerHTML());</script>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">Home</a>
+  <a href="pages/shop.html">Our Cats</a>
+  <a href="pages/accessories.html">Accessories</a>
+  <a href="pages/about.html">About</a>
+  <a href="pages/contact.html">Contact</a>
+  <a href="pages/login.html" style="color:var(--amber)">Sign In</a>
+</div>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <span class="current">Our Cats</span>
+    </nav>
+    <div class="label-chip"><i class="fa-solid fa-crown"></i> Full Collection</div>
+    <h1 class="page-hero-title">Find Your <em style="font-style:italic;color:var(--amber)">Perfect</em> Kitten</h1>
+    <p class="page-hero-sub">Every kitten is health-certified, pedigree-verified, and ready for their forever home. Filter by breed, gender, price and more.</p>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section class="section" style="padding-top:60px">
+  <div class="container">
+
+    <!-- Mobile filter toggle -->
+    <div style="display:flex;gap:12px;margin-bottom:20px" class="mobile-only" id="mobile-bar">
+      <button class="btn btn-outline" style="flex:1;justify-content:center" id="mobile-filter-btn">
+        <i class="fa-solid fa-sliders"></i> Filters
+      </button>
+      <select class="sort-select" style="flex:1" id="sort-mobile">
+        <option value="default">Sort: Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name-asc">Name: A–Z</option>
+        <option value="newest">Newest First</option>
+      </select>
+    </div>
+
+    <div class="shop-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <h4>Filters</h4>
+          <button class="clear-filters" id="clear-all">Clear All</button>
+        </div>
+
+        <!-- Breed -->
+        <div class="sidebar-section">
+          <span class="sidebar-label">Breed</span>
+          <label class="filter-check"><input type="checkbox" name="breed" value="Persian"> Persian <span class="count">2</span></label>
+          <label class="filter-check"><input type="checkbox" name="breed" value="Maine Coon"> Maine Coon <span class="count">1</span></label>
+          <label class="filter-check"><input type="checkbox" name="breed" value="Scottish Fold"> Scottish Fold <span class="count">1</span></label>
+          <label class="filter-check"><input type="checkbox" name="breed" value="Siamese"> Siamese <span class="count">1</span></label>
+          <label class="filter-check"><input type="checkbox" name="breed" value="British Shorthair"> British Shorthair <span class="count">1</span></label>
+          <label class="filter-check"><input type="checkbox" name="breed" value="Ragdoll"> Ragdoll <span class="count">1</span></label>
+          <label class="filter-check"><input type="checkbox" name="breed" value="Abyssinian"> Abyssinian <span class="count">1</span></label>
+          <label class="filter-check"><input type="checkbox" name="breed" value="Norwegian Forest"> Norwegian Forest <span class="count">1</span></label>
+        </div>
+
+        <!-- Gender -->
+        <div class="sidebar-section">
+          <span class="sidebar-label">Gender</span>
+          <label class="filter-check"><input type="checkbox" name="gender" value="Male"> Male <span class="count">4</span></label>
+          <label class="filter-check"><input type="checkbox" name="gender" value="Female"> Female <span class="count">4</span></label>
+        </div>
+
+        <!-- Price -->
+        <div class="sidebar-section">
+          <span class="sidebar-label">Max Price</span>
+          <div class="price-range">
+            <input type="range" class="price-slider" id="price-slider" min="500" max="2000" value="2000" step="50">
+            <div class="price-labels"><span>$500</span><span id="price-val">Up to $2,000</span></div>
+          </div>
+        </div>
+
+        <!-- Status -->
+        <div class="sidebar-section">
+          <span class="sidebar-label">Status</span>
+          <label class="filter-check"><input type="checkbox" name="status" value="vaccinated"> Vaccinated</label>
+          <label class="filter-check"><input type="checkbox" name="status" value="microchipped"> Microchipped</label>
+        </div>
+
+        <!-- Tag -->
+        <div class="sidebar-section">
+          <span class="sidebar-label">Tag</span>
+          <label class="filter-check"><input type="checkbox" name="tag" value="New"> New Arrivals</label>
+          <label class="filter-check"><input type="checkbox" name="tag" value="Popular"> Popular</label>
+          <label class="filter-check"><input type="checkbox" name="tag" value="Sale"> On Sale</label>
+        </div>
+      </aside>
+
+      <!-- MAIN -->
+      <div>
+        <!-- Search -->
+        <div class="search-wrap">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" class="search-input" id="search-input" placeholder="Search by name, breed, or colour…">
+        </div>
+
+        <!-- Active filter tags -->
+        <div class="active-filters" id="active-filters"></div>
+
+        <!-- Toolbar -->
+        <div class="shop-toolbar">
+          <p class="shop-count">Showing <strong id="result-count">8</strong> kittens</p>
+          <div class="toolbar-right">
+            <select class="sort-select desktop-only" id="sort-desktop">
+              <option value="default">Sort: Featured</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A–Z</option>
+              <option value="newest">Newest First</option>
+            </select>
+            <div class="view-toggle">
+              <button class="view-btn active" id="grid-btn" aria-label="Grid view"><i class="fa-solid fa-grip"></i></button>
+              <button class="view-btn" id="list-btn" aria-label="List view"><i class="fa-solid fa-list"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cat Grid -->
+        <div class="cat-grid" id="cat-grid"></div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<script>document.write(footerHTML('../'));</script>
+
+<script src="../js/main.js"></script>
+<script>
+(function() {
+  const grid = document.getElementById('cat-grid');
+  const countEl = document.getElementById('result-count');
+  const searchInput = document.getElementById('search-input');
+  const priceSlider = document.getElementById('price-slider');
+  const priceVal = document.getElementById('price-val');
+  const activeFiltersEl = document.getElementById('active-filters');
+  const ITEMS_PER_PAGE = 6;
+  let currentPage = 1;
+  let isListView = false;
+
+  // Read URL param for breed pre-filter
+  const urlBreed = new URLSearchParams(location.search).get('breed');
+  if (urlBreed) {
+    document.querySelectorAll('input[name="breed"]').forEach(cb => {
+      if (cb.value === urlBreed) cb.checked = true;
+    });
+  }
+
+  function getFilters() {
+    const breeds = [...document.querySelectorAll('input[name="breed"]:checked')].map(c => c.value);
+    const genders = [...document.querySelectorAll('input[name="gender"]:checked')].map(c => c.value);
+    const statuses = [...document.querySelectorAll('input[name="status"]:checked')].map(c => c.value);
+    const tags = [...document.querySelectorAll('input[name="tag"]:checked')].map(c => c.value);
+    const maxPrice = parseInt(priceSlider.value);
+    const search = searchInput.value.toLowerCase().trim();
+    return { breeds, genders, statuses, tags, maxPrice, search };
+  }
+
+  function filterCats() {
+    const { breeds, genders, statuses, tags, maxPrice, search } = getFilters();
+    const sortVal = document.getElementById('sort-desktop').value || document.getElementById('sort-mobile').value;
+
+    let result = CATS.filter(c => {
+      if (breeds.length && !breeds.includes(c.breed)) return false;
+      if (genders.length && !genders.includes(c.gender)) return false;
+      if (statuses.includes('vaccinated') && !c.vaccinated) return false;
+      if (statuses.includes('microchipped') && !c.microchipped) return false;
+      if (tags.length && !tags.includes(c.tag)) return false;
+      if (c.price > maxPrice) return false;
+      if (search && !c.name.toLowerCase().includes(search) && !c.breed.toLowerCase().includes(search) && !c.color.toLowerCase().includes(search)) return false;
+      return true;
+    });
+
+    if (sortVal === 'price-asc') result.sort((a,b) => a.price - b.price);
+    else if (sortVal === 'price-desc') result.sort((a,b) => b.price - a.price);
+    else if (sortVal === 'name-asc') result.sort((a,b) => a.name.localeCompare(b.name));
+    else if (sortVal === 'newest') result.sort((a,b) => b.id - a.id);
+
+    return result;
+  }
+
+  function renderActiveFilters() {
+    const { breeds, genders, statuses, tags } = getFilters();
+    const all = [
+      ...breeds.map(b => ({ label: b, type: 'breed', val: b })),
+      ...genders.map(g => ({ label: g, type: 'gender', val: g })),
+      ...statuses.map(s => ({ label: s.charAt(0).toUpperCase() + s.slice(1), type: 'status', val: s })),
+      ...tags.map(t => ({ label: t, type: 'tag', val: t })),
+    ];
+    if (parseInt(priceSlider.value) < 2000) {
+      all.push({ label: `Max $${priceSlider.value}`, type: 'price', val: '' });
+    }
+    activeFiltersEl.innerHTML = all.map(f => `
+      <span class="filter-tag">${f.label}
+        <button onclick="removeFilter('${f.type}','${f.val}')" aria-label="Remove filter"><i class="fa-solid fa-xmark"></i></button>
+      </span>`).join('');
+  }
+
+  window.removeFilter = function(type, val) {
+    if (type === 'price') { priceSlider.value = 2000; priceVal.textContent = 'Up to $2,000'; }
+    else {
+      const cb = document.querySelector(`input[name="${type}"][value="${val}"]`);
+      if (cb) cb.checked = false;
+    }
+    currentPage = 1; render();
+  };
+
+  function renderPagination(total) {
+    const pages = Math.ceil(total / ITEMS_PER_PAGE);
+    const pag = document.getElementById('pagination');
+    if (pages <= 1) { pag.innerHTML = ''; return; }
+    let html = '';
+    if (currentPage > 1) html += `<button class="page-btn" onclick="goPage(${currentPage-1})"><i class="fa-solid fa-chevron-left"></i></button>`;
+    for (let i = 1; i <= pages; i++) {
+      html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+    }
+    if (currentPage < pages) html += `<button class="page-btn" onclick="goPage(${currentPage+1})"><i class="fa-solid fa-chevron-right"></i></button>`;
+    pag.innerHTML = html;
+  }
+
+  window.goPage = function(n) { currentPage = n; render(); window.scrollTo({top: 320, behavior:'smooth'}); };
+
+  function render() {
+    const filtered = filterCats();
+    countEl.textContent = filtered.length;
+    renderActiveFilters();
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    const page = filtered.slice(start, start + ITEMS_PER_PAGE);
+    if (!page.length) {
+      grid.innerHTML = `<div class="empty-state"><i class="fa-solid fa-cat"></i><h3>No kittens found</h3><p>Try adjusting your filters or search term.</p></div>`;
+    } else {
+      grid.innerHTML = page.map(c => catCardHTML(c)).join('');
+      // re-apply wishlist states
+      Wishlist.items.forEach(id => {
+        document.querySelectorAll(`[data-wish="${id}"]`).forEach(b => b.classList.add('active'));
+      });
+    }
+    renderPagination(filtered.length);
+  }
+
+  // Price slider
+  priceSlider.addEventListener('input', () => {
+    priceVal.textContent = `Up to $${parseInt(priceSlider.value).toLocaleString()}`;
+    const pct = ((priceSlider.value - 500) / (2000 - 500)) * 100;
+    priceSlider.style.background = `linear-gradient(to right, var(--amber) 0%, var(--amber) ${pct}%, rgba(196,122,53,0.3) ${pct}%)`;
+    currentPage = 1; render();
+  });
+
+  // All filter changes
+  document.querySelectorAll('.sidebar input').forEach(inp => inp.addEventListener('change', () => { currentPage = 1; render(); }));
+  searchInput.addEventListener('input', () => { currentPage = 1; render(); });
+  document.getElementById('sort-desktop').addEventListener('change', () => render());
+  document.getElementById('sort-mobile').addEventListener('change', () => render());
+
+  // View toggle
+  document.getElementById('grid-btn').addEventListener('click', () => {
+    isListView = false; grid.classList.remove('list-view');
+    document.getElementById('grid-btn').classList.add('active');
+    document.getElementById('list-btn').classList.remove('active');
+  });
+  document.getElementById('list-btn').addEventListener('click', () => {
+    isListView = true; grid.classList.add('list-view');
+    document.getElementById('list-btn').classList.add('active');
+    document.getElementById('grid-btn').classList.remove('active');
+  });
+
+  // Clear all
+  document.getElementById('clear-all').addEventListener('click', () => {
+    document.querySelectorAll('.sidebar input[type="checkbox"]').forEach(cb => cb.checked = false);
+    priceSlider.value = 2000; priceVal.textContent = 'Up to $2,000';
+    priceSlider.style.background = '';
+    searchInput.value = '';
+    currentPage = 1; render();
+  });
+
+  // Mobile filter toggle
+  document.getElementById('mobile-filter-btn')?.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('mobile-open');
+  });
+
+  // Initial render
+  render();
+  initNav(); initReveal();
+})();
+</script>
+</body>
+</html>

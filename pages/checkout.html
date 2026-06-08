@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout — HelloKitty</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .checkout-layout {
+      display: grid; grid-template-columns: 1fr 400px; gap: 48px; align-items: start;
+    }
+
+    /* ── STEPS ── */
+    .checkout-steps {
+      display: flex; gap: 0; margin-bottom: 40px;
+      border-bottom: 2px solid var(--border); padding-bottom: 28px;
+    }
+    .step {
+      flex: 1; display: flex; align-items: center; gap: 12px;
+      padding-right: 24px; position: relative;
+    }
+    .step:not(:last-child)::after {
+      content: ''; position: absolute; right: 8px; top: 50%;
+      transform: translateY(-50%);
+      width: 12px; height: 2px; background: var(--border);
+    }
+    .step-num {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; transition: var(--transition);
+      background: var(--cream); border: 2px solid var(--border); color: var(--text-muted);
+    }
+    .step.active .step-num { background: var(--amber); border-color: var(--amber); color: #fff; }
+    .step.done .step-num { background: #276749; border-color: #276749; color: #fff; }
+    .step-label { font-size: 13px; font-weight: 600; color: var(--text-muted); }
+    .step.active .step-label { color: var(--brown-deep); }
+    .step.done .step-label { color: #276749; }
+
+    /* ── FORM SECTIONS ── */
+    .checkout-section {
+      background: var(--warm-white); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 36px 36px; margin-bottom: 24px;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700;
+      color: var(--brown-deep); margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+    }
+    .section-heading i { font-size: 18px; color: var(--amber); }
+
+    /* ── PAYMENT METHODS ── */
+    .payment-options { display: flex; flex-direction: column; gap: 12px; }
+    .payment-option {
+      border: 2px solid var(--border); border-radius: var(--radius-md); padding: 18px 20px;
+      display: flex; align-items: center; gap: 16px; cursor: pointer; transition: var(--transition);
+    }
+    .payment-option:hover { border-color: var(--amber); }
+    .payment-option.selected { border-color: var(--amber); background: var(--amber-pale); }
+    .payment-option input[type="radio"] { accent-color: var(--amber); width: 18px; height: 18px; }
+    .payment-label { font-weight: 700; font-size: 14px; color: var(--brown-deep); }
+    .payment-sub { font-size: 12px; color: var(--text-muted); }
+    .payment-icons { margin-left: auto; display: flex; gap: 6px; }
+    .card-icon { padding: 4px 10px; background: var(--cream); border-radius: 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); border: 1px solid var(--border); }
+
+    .card-fields { margin-top: 20px; display: none; }
+    .card-fields.show { display: block; }
+
+    /* ── ORDER SUMMARY ── */
+    .order-summary {
+      background: var(--warm-white); border-radius: var(--radius-xl);
+      border: 1px solid var(--border); padding: 32px;
+      position: sticky; top: calc(var(--nav-h) + 24px);
+    }
+    .summary-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700; color: var(--brown-deep); margin-bottom: 24px; }
+    .summary-items { display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px; max-height: 280px; overflow-y: auto; }
+    .summary-item { display: flex; gap: 14px; align-items: center; }
+    .summary-item-img { width: 56px; height: 56px; border-radius: var(--radius-sm); object-fit: cover; flex-shrink: 0; }
+    .summary-item-info { flex: 1; }
+    .summary-item-name { font-size: 14px; font-weight: 700; color: var(--brown-deep); margin-bottom: 2px; }
+    .summary-item-meta { font-size: 12px; color: var(--text-muted); }
+    .summary-item-price { font-size: 15px; font-weight: 700; color: var(--amber); flex-shrink: 0; }
+
+    .summary-divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
+    .summary-row span:first-child { font-size: 14px; color: var(--text-muted); }
+    .summary-row span:last-child { font-size: 14px; font-weight: 600; color: var(--brown-deep); }
+    .summary-total { display: flex; justify-content: space-between; margin-top: 6px; }
+    .summary-total span:first-child { font-size: 15px; font-weight: 700; color: var(--brown-deep); }
+    .summary-total span:last-child { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--amber); }
+
+    .promo-row { display: flex; gap: 0; margin: 20px 0; }
+    .promo-input {
+      flex: 1; padding: 11px 14px;
+      border: 1.5px solid var(--border); border-right: none;
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+      font-size: 13px; font-family: 'Jost', sans-serif; outline: none;
+      transition: var(--transition);
+    }
+    .promo-input:focus { border-color: var(--amber); }
+    .promo-btn {
+      padding: 11px 18px; background: var(--amber); color: #fff; border: none;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0; cursor: pointer;
+      font-size: 13px; font-weight: 700; transition: var(--transition);
+    }
+    .promo-btn:hover { background: var(--brown-mid); }
+
+    .trust-row { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .trust-item-sm { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--text-muted); }
+    .trust-item-sm i { color: var(--amber); font-size: 14px; }
+
+    /* ── SUCCESS ── */
+    .order-success {
+      display: none; text-align: center; padding: 60px 40px;
+    }
+    .success-icon {
+      width: 96px; height: 96px; background: rgba(47,133,90,0.1);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px; font-size: 42px; color: #276749;
+    }
+
+    @media (max-width: 1024px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+      .order-summary { position: static; }
+    }
+    @media (max-width: 768px) {
+      .checkout-section { padding: 28px 24px; }
+      .checkout-steps { gap: 0; }
+      .step-label { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<script src="../js/main.js"></script>
+<script>document.write(navHTML('../'));</script>
+
+<!-- PAGE HEADER -->
+<div style="padding-top: var(--nav-h);"></div>
+<section style="padding: 40px 0 0;">
+  <div class="container">
+    <nav class="breadcrumb" style="margin-bottom:32px">
+      <a href="../index.html">Home</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <a href="shop.html">Our Cats</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <span class="current">Checkout</span>
+    </nav>
+
+    <!-- STEPS -->
+    <div class="checkout-steps">
+      <div class="step active" id="step1">
+        <div class="step-num">1</div>
+        <span class="step-label">Information</span>
+      </div>
+      <div class="step" id="step2">
+        <div class="step-num">2</div>
+        <span class="step-label">Shipping</span>
+      </div>
+      <div class="step" id="step3">
+        <div class="step-num">3</div>
+        <span class="step-label">Payment</span>
+      </div>
+      <div class="step" id="step4">
+        <div class="step-num">4</div>
+        <span class="step-label">Confirm</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="checkout-layout">
+      <!-- LEFT: FORMS -->
+      <div id="checkout-forms">
+
+        <!-- STEP 1: Contact Info -->
+        <div class="checkout-section" id="section-info">
+          <div class="section-heading"><i class="fa-solid fa-user"></i> Contact Information</div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" id="fn" placeholder="Adaeze"></div>
+            <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" id="ln" placeholder="Okafor"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-input" id="email" placeholder="you@email.com"></div>
+            <div class="form-group"><label class="form-label">Phone Number</label><input type="tel" class="form-input" id="phone" placeholder="+234 800 000 0000"></div>
+          </div>
+        </div>
+
+        <!-- STEP 2: Delivery -->
+        <div class="checkout-section" id="section-delivery">
+          <div class="section-heading"><i class="fa-solid fa-truck-fast"></i> Delivery Address</div>
+          <div class="form-group"><label class="form-label">Street Address</label><input type="text" class="form-input" id="addr" placeholder="12 Admiralty Way"></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">City</label><input type="text" class="form-input" id="city" placeholder="Lagos"></div>
+            <div class="form-group"><label class="form-label">State</label><select class="form-select" id="state">
+              <option value="">Select State…</option>
+              <option>Abia</option><option>Abuja (FCT)</option><option>Adamawa</option><option>Akwa Ibom</option>
+              <option>Anambra</option><option>Bauchi</option><option>Bayelsa</option><option>Benue</option>
+              <option>Borno</option><option>Cross River</option><option>Delta</option><option>Ebonyi</option>
+              <option>Edo</option><option>Ekiti</option><option>Enugu</option><option>Gombe</option>
+              <option>Imo</option><option>Jigawa</option><option>Kaduna</option><option>Kano</option>
+              <option>Katsina</option><option>Kebbi</option><option>Kogi</option><option>Kwara</option>
+              <option selected>Lagos</option><option>Nasarawa</option><option>Niger</option><option>Ogun</option>
+              <option>Ondo</option><option>Osun</option><option>Oyo</option><option>Plateau</option>
+              <option>Rivers</option><option>Sokoto</option><option>Taraba</option><option>Yobe</option><option>Zamfara</option>
+            </select></div>
+          </div>
+          <div class="form-group"><label class="form-label">Delivery Notes (optional)</label><textarea class="form-textarea" id="notes" placeholder="Gate code, landmark, delivery instructions…" style="min-height:80px"></textarea></div>
+
+          <!-- Delivery options -->
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+            <label style="cursor:pointer;display:flex;align-items:center;gap:14px;padding:16px;border:2px solid var(--amber);background:var(--amber-pale);border-radius:var(--radius-md)">
+              <input type="radio" name="delivery-opt" value="standard" checked style="accent-color:var(--amber)">
+              <div style="flex:1"><div style="font-weight:700;font-size:14px;color:var(--brown-deep)">Standard Delivery</div><div style="font-size:12px;color:var(--text-muted)">3–7 business days · Climate-controlled vehicle</div></div>
+              <span style="font-weight:700;color:var(--amber);font-size:14px">Free</span>
+            </label>
+            <label style="cursor:pointer;display:flex;align-items:center;gap:14px;padding:16px;border:2px solid var(--border);border-radius:var(--radius-md);transition:border-color 0.3s">
+              <input type="radio" name="delivery-opt" value="express" style="accent-color:var(--amber)">
+              <div style="flex:1"><div style="font-weight:700;font-size:14px;color:var(--brown-deep)">Express Delivery</div><div style="font-size:12px;color:var(--text-muted)">1–2 business days · Priority handler assigned</div></div>
+              <span style="font-weight:700;color:var(--amber);font-size:14px">$25</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- STEP 3: Payment -->
+        <div class="checkout-section" id="section-payment">
+          <div class="section-heading"><i class="fa-solid fa-credit-card"></i> Payment Method</div>
+          <div class="payment-options">
+            <label class="payment-option selected" id="pay-card-opt">
+              <input type="radio" name="payment" value="card" checked>
+              <div>
+                <div class="payment-label">Debit / Credit Card</div>
+                <div class="payment-sub">Visa, Mastercard, Verve</div>
+              </div>
+              <div class="payment-icons">
+                <span class="card-icon">VISA</span>
+                <span class="card-icon">MC</span>
+                <span class="card-icon">VRV</span>
+              </div>
+            </label>
+            <div class="card-fields show" id="card-fields">
+              <div class="form-group"><label class="form-label">Card Number</label><input type="text" class="form-input" placeholder="0000  0000  0000  0000" maxlength="19" id="card-num"></div>
+              <div class="form-row">
+                <div class="form-group"><label class="form-label">Expiry</label><input type="text" class="form-input" placeholder="MM / YY" maxlength="7" id="card-exp"></div>
+                <div class="form-group"><label class="form-label">CVV</label><input type="text" class="form-input" placeholder="•••" maxlength="4" id="card-cvv"></div>
+              </div>
+              <div class="form-group"><label class="form-label">Name on Card</label><input type="text" class="form-input" placeholder="Adaeze Okafor" id="card-name"></div>
+            </div>
+
+            <label class="payment-option" id="pay-transfer-opt">
+              <input type="radio" name="payment" value="transfer">
+              <div>
+                <div class="payment-label">Bank Transfer</div>
+                <div class="payment-sub">Direct transfer to our escrow account</div>
+              </div>
+              <div class="payment-icons"><span class="card-icon">BANK</span></div>
+            </label>
+            <div id="transfer-details" style="display:none;background:var(--cream);border-radius:var(--radius-sm);padding:16px 20px;border:1px solid var(--border);font-size:13px;">
+              <p style="font-weight:700;margin-bottom:6px;color:var(--brown-deep)">Transfer Details</p>
+              <p>Bank: <strong>GTBank</strong></p>
+              <p>Account: <strong>0123456789</strong></p>
+              <p>Account Name: <strong>HelloKitty Nigeria Ltd</strong></p>
+              <p style="margin-top:8px;color:var(--text-muted)">Use your order number as payment reference. Orders are confirmed within 1 business hour.</p>
+            </div>
+
+            <label class="payment-option" id="pay-flutter-opt">
+              <input type="radio" name="payment" value="flutterwave">
+              <div>
+                <div class="payment-label">Flutterwave</div>
+                <div class="payment-sub">Pay securely with Flutterwave</div>
+              </div>
+              <div class="payment-icons"><span class="card-icon" style="color:#F5A623;border-color:#F5A623">FW</span></div>
+            </label>
+          </div>
+        </div>
+
+        <!-- PLACE ORDER -->
+        <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;margin-bottom:12px" id="place-order-btn">
+          <i class="fa-solid fa-lock"></i> Place Order Securely
+        </button>
+        <p style="font-size:12px;color:var(--text-muted);text-align:center"><i class="fa-solid fa-shield-halved" style="color:var(--amber)"></i> 256-bit SSL encryption. Your payment details are never stored.</p>
+      </div>
+
+      <!-- SUCCESS -->
+      <div class="order-success" id="order-success">
+        <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+        <h2 style="margin-bottom:12px">Order Confirmed!</h2>
+        <p style="margin-bottom:8px">Thank you for your order. Our team will contact you within 2 hours to confirm delivery details.</p>
+        <p style="margin-bottom:32px">Your order reference: <strong style="color:var(--amber)" id="order-ref">#HK-00000</strong></p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+          <a href="../index.html" class="btn btn-primary btn-lg">Back to Home</a>
+          <a href="shop.html" class="btn btn-outline btn-lg">Browse More Kittens</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: ORDER SUMMARY -->
+      <div class="order-summary" id="order-summary">
+        <div class="summary-title">Order Summary</div>
+        <div class="summary-items" id="summary-items">
+          <div style="text-align:center;color:var(--text-muted);padding:20px 0">
+            <i class="fa-solid fa-bag-shopping" style="font-size:28px;opacity:0.3;display:block;margin-bottom:8px"></i>
+            <p style="font-size:13px">Your cart is empty</p>
+            <a href="shop.html" style="color:var(--amber);font-size:13px;font-weight:600">Browse Kittens →</a>
+          </div>
+        </div>
+
+        <div class="promo-row">
+          <input type="text" class="promo-input" placeholder="Promo code" id="promo-code">
+          <button class="promo-btn" id="promo-btn">Apply</button>
+        </div>
+
+        <div class="summary-divider"></div>
+        <div class="summary-row"><span>Subtotal</span><span id="sum-subtotal">$0</span></div>
+        <div class="summary-row"><span>Delivery</span><span id="sum-delivery" style="color:#276749">Free</span></div>
+        <div class="summary-row" id="sum-discount-row" style="display:none"><span>Discount</span><span id="sum-discount" style="color:#276749">-$0</span></div>
+        <div class="summary-divider"></div>
+        <div class="summary-total">
+          <span>Total</span>
+          <span id="sum-total">$0</span>
+        </div>
+
+        <div class="trust-row">
+          <div class="trust-item-sm"><i class="fa-solid fa-shield-heart"></i> 30-Day Health Guarantee on all kittens</div>
+          <div class="trust-item-sm"><i class="fa-solid fa-truck-fast"></i> Climate-controlled delivery nationwide</div>
+          <div class="trust-item-sm"><i class="fa-solid fa-headset"></i> 24/7 vet hotline included free</div>
+          <div class="trust-item-sm"><i class="fa-solid fa-lock"></i> Secure escrow payment — funds held until delivery</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>document.write(footerHTML('../'));</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initNav(); Cart.badge();
+
+  // Render summary
+  function renderSummary() {
+    const items = Cart.items;
+    const el = document.getElementById('summary-items');
+    const sub = document.getElementById('sum-subtotal');
+    const tot = document.getElementById('sum-total');
+    if (!items.length) {
+      el.innerHTML = `<div style="text-align:center;color:var(--text-muted);padding:20px 0"><i class="fa-solid fa-bag-shopping" style="font-size:28px;opacity:0.3;display:block;margin-bottom:8px"></i><p style="font-size:13px">Your cart is empty</p><a href="shop.html" style="color:var(--amber);font-size:13px;font-weight:600">Browse Kittens →</a></div>`;
+      sub.textContent = '$0'; tot.textContent = '$0';
+      return;
+    }
+    el.innerHTML = items.map(i => `
+      <div class="summary-item">
+        <img class="summary-item-img" src="${i.img}" alt="${i.name}">
+        <div class="summary-item-info">
+          <div class="summary-item-name">${i.name}</div>
+          <div class="summary-item-meta">${i.breed || i.category || ''} · Qty: ${i.qty}</div>
+        </div>
+        <div class="summary-item-price">$${(i.price * i.qty).toLocaleString()}</div>
+      </div>`).join('');
+    const total = Cart.total();
+    sub.textContent = '$' + total.toLocaleString();
+    tot.textContent = '$' + total.toLocaleString();
+  }
+  renderSummary();
+
+  // Promo code
+  document.getElementById('promo-btn').addEventListener('click', () => {
+    const code = document.getElementById('promo-code').value.trim().toUpperCase();
+    if (code === 'HELLO10') {
+      const discount = Math.round(Cart.total() * 0.1);
+      document.getElementById('sum-discount-row').style.display = 'flex';
+      document.getElementById('sum-discount').textContent = '-$' + discount.toLocaleString();
+      document.getElementById('sum-total').textContent = '$' + (Cart.total() - discount).toLocaleString();
+      showToast('Promo applied! 10% off your order 🎉', 'success');
+    } else {
+      showToast('Invalid promo code.', 'error');
+    }
+  });
+
+  // Payment method toggle
+  document.querySelectorAll('input[name="payment"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+      radio.closest('.payment-option').classList.add('selected');
+      document.getElementById('card-fields').classList.toggle('show', radio.value === 'card');
+      document.getElementById('transfer-details').style.display = radio.value === 'transfer' ? 'block' : 'none';
+    });
+  });
+
+  // Format card number
+  document.getElementById('card-num')?.addEventListener('input', e => {
+    let val = e.target.value.replace(/\D/g,'').substring(0,16);
+    val = val.replace(/(.{4})/g,'$1  ').trim();
+    e.target.value = val;
+  });
+
+  // Delivery option styling
+  document.querySelectorAll('input[name="delivery-opt"]').forEach(r => {
+    r.addEventListener('change', () => {
+      document.querySelectorAll('label[style*="border"]').forEach(l => {
+        l.style.borderColor = 'var(--border)'; l.style.background = '';
+      });
+      const lbl = r.closest('label');
+      lbl.style.borderColor = 'var(--amber)'; lbl.style.background = 'var(--amber-pale)';
+      const isExpress = r.value === 'express';
+      document.getElementById('sum-delivery').textContent = isExpress ? '$25' : 'Free';
+      document.getElementById('sum-delivery').style.color = isExpress ? 'var(--brown-deep)' : '#276749';
+    });
+  });
+
+  // Place order
+  document.getElementById('place-order-btn').addEventListener('click', () => {
+    // Validate
+    const fn = document.getElementById('fn').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const addr = document.getElementById('addr').value.trim();
+    const state = document.getElementById('state').value;
+
+    if (!fn) { showToast('Please enter your first name.', 'error'); return; }
+    if (!email.includes('@')) { showToast('Please enter a valid email.', 'error'); return; }
+    if (!addr) { showToast('Please enter your delivery address.', 'error'); return; }
+    if (!state) { showToast('Please select your state.', 'error'); return; }
+    if (!Cart.items.length) { showToast('Your cart is empty.', 'error'); return; }
+
+    const ref = '#HK-' + Math.random().toString(36).substring(2,8).toUpperCase();
+    document.getElementById('order-ref').textContent = ref;
+    document.getElementById('checkout-forms').style.display = 'none';
+    document.getElementById('order-success').style.display = 'block';
+    document.getElementById('order-summary').style.display = 'none';
+
+    // Mark all steps done
+    ['step1','step2','step3','step4'].forEach(id => {
+      const s = document.getElementById(id);
+      s.classList.remove('active'); s.classList.add('done');
+      s.querySelector('.step-num').innerHTML = '<i class="fa-solid fa-check" style="font-size:12px"></i>';
+    });
+
+    Cart.items = []; Cart.save(); Cart.badge();
+    showToast('Order placed successfully! 🐾', 'success');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cat Detail — HelloKitty</title>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .detail-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-main {
+      aspect-ratio: 4/5; border-radius: var(--radius-xl); overflow: hidden;
+      position: relative; box-shadow: var(--shadow-lg); background: var(--cream-dark);
+    }
+    .gallery-main img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+    .gallery-main:hover img { transform: scale(1.04); }
+    .gallery-tag {
+      position: absolute; top: 20px; left: 20px; z-index: 2;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 20px;
+    }
+    .gallery-tag.popular { background: rgba(196,122,53,0.9); color: #fff; }
+    .gallery-tag.new-tag { background: rgba(47,133,90,0.9); color: #fff; }
+    .gallery-tag.sale { background: rgba(197,48,48,0.9); color: #fff; }
+    .gallery-wish {
+      position: absolute; top: 20px; right: 20px; z-index: 2;
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: center;
+      border: none; cursor: pointer; font-size: 18px; color: var(--text-muted);
+      transition: var(--transition); box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    .gallery-wish:hover, .gallery-wish.active { color: #E53E3E; }
+
+    /* ── DETAIL INFO ── */
+    .detail-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 5vw, 60px); font-weight: 700;
+      color: var(--brown-deep); line-height: 1; margin-bottom: 8px;
+    }
+    .detail-breed { font-size: 16px; color: var(--amber); font-weight: 600; margin-bottom: 20px; }
+    .detail-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px; font-weight: 700; color: var(--amber);
+      margin-bottom: 24px;
+    }
+    .detail-attrs {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-bottom: 28px;
+    }
+    .detail-attr {
+      background: var(--cream); border-radius: var(--radius-sm);
+      padding: 14px 16px; border: 1px solid var(--border);
+    }
+    .detail-attr-lbl {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px;
+    }
+    .detail-attr-val { font-size: 15px; font-weight: 700; color: var(--brown-deep); }
+
+    .detail-desc { font-size: 15px; color: var(--text-mid); line-height: 1.9; margin-bottom: 28px; }
+
+    .detail-badges { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 32px; }
+    .detail-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;
+    }
+    .detail-badge.green { background: rgba(47,133,90,0.1); color: #276749; border: 1px solid rgba(47,133,90,0.2); }
+    .detail-badge.amber { background: var(--amber-pale); color: var(--amber); border: 1px solid rgba(196,122,53,0.25); }
+    .detail-badge.grey { background: var(--cream); color: var(--text-muted); border: 1px solid var(--border); }
+
+    .detail-actions { display: flex; gap: 14px; margin-bottom: 32px; }
+    .detail-actions .btn { flex: 1; justify-content: center; }
+
+    /* Guarantee strip */
+    .guarantee-strip {
+      background: var(--cream); border-radius: var(--radius-md);
+      padding: 20px 24px; border: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+    }
+    .guarantee-item { display: flex; align-items: center; gap: 10px; }
+    .guarantee-item i { font-size: 18px; color: var(--amber); }
+    .guarantee-item span { font-size: 12px; font-weight: 600; color: var(--text-mid); line-height: 1.4; }
+
+    /* ── ABOUT SECTION ── */
+    .about-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 28px; }
+    .about-tab {
+      padding: 12px 24px; font-size: 13px; font-weight: 700; letter-spacing: 0.5px;
+      color: var(--text-muted); cursor: pointer; border: none; background: none;
+      border-bottom: 2px solid transparent; margin-bottom: -2px; transition: var(--transition);
+    }
+    .about-tab.active { color: var(--amber); border-bottom-color: var(--amber); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .spec-row {
+      display: flex; justify-content: space-between;
+      padding: 13px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .spec-label { color: var(--text-muted); font-weight: 500; }
+    .spec-val { color: var(--brown-deep); font-weight: 700; }
+
+    /* ── RELATED CATS ── */
+    .related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+    @media (max-width: 1024px) {
+      .detail-layout { gap: 40px; }
+      .related-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .detail-layout { grid-template-columns: 1fr; }
+      .gallery-main { aspect-ratio: 3/2; }
+      .related-grid { grid-template-columns: repeat(2, 1fr); }
+      .detail-attrs { grid-template-columns: repeat(2, 1fr); }
+      .guarantee-strip { grid-template-columns: 1fr; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+<script src="../js/main.js"></script>
+<script>document.write(navHTML('../'));</script>
+<script>document.write(cartDrawerHTML());</script>
+
+<div style="padding-top: var(--nav-h);"></div>
+
+<section class="section" style="padding-top: 40px;" id="detail-section">
+  <div class="container">
+    <nav class="breadcrumb" id="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <a href="shop.html">Our Cats</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <span class="current" id="bc-name">Loading…</span>
+    </nav>
+    <div class="detail-layout" id="detail-layout">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT TABS -->
+<section class="section" style="padding-top: 0;" id="about-section" style="display:none">
+  <div class="container">
+    <div style="max-width: 780px; margin: 0 auto;">
+      <div class="about-tabs">
+        <button class="about-tab active" data-tab="details">Details & Specs</button>
+        <button class="about-tab" data-tab="care">Care Guide</button>
+        <button class="about-tab" data-tab="delivery">Delivery</button>
+      </div>
+      <div class="tab-panel active" id="tab-details">
+        <div class="spec-grid" id="spec-grid"><!-- filled by JS --></div>
+      </div>
+      <div class="tab-panel" id="tab-care">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" id="care-grid">
+          <div class="feature-card" style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px;">
+            <div class="feature-icon-wrap"><i class="fa-solid fa-bowl-food"></i></div>
+            <h4 style="margin-bottom:8px;color:var(--brown-deep)">Feeding</h4>
+            <p style="font-size:13px">Feed high-quality, breed-appropriate kitten food 3–4 times daily until 6 months, then twice daily. Always provide fresh water.</p>
+          </div>
+          <div class="feature-card" style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px;">
+            <div class="feature-icon-wrap"><i class="fa-solid fa-scissors"></i></div>
+            <h4 style="margin-bottom:8px;color:var(--brown-deep)">Grooming</h4>
+            <p style="font-size:13px">Brush regularly based on coat type. Schedule vet check-ups every 6 months. Keep nails trimmed and ears clean.</p>
+          </div>
+          <div class="feature-card" style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px;">
+            <div class="feature-icon-wrap"><i class="fa-solid fa-dumbbell"></i></div>
+            <h4 style="margin-bottom:8px;color:var(--brown-deep)">Exercise</h4>
+            <p style="font-size:13px">Provide interactive toys, cat trees, and play sessions daily. Mental stimulation is as important as physical activity.</p>
+          </div>
+          <div class="feature-card" style="background: var(--warm-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 24px;">
+            <div class="feature-icon-wrap"><i class="fa-solid fa-syringe"></i></div>
+            <h4 style="margin-bottom:8px;color:var(--brown-deep)">Health</h4>
+            <p style="font-size:13px">Keep vaccinations current, apply regular flea and worm treatment, and have your vet monitor breed-specific health conditions.</p>
+          </div>
+        </div>
+      </div>
+      <div class="tab-panel" id="tab-delivery">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div style="display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start; padding: 20px; background: var(--warm-white); border-radius: var(--radius-md); border: 1px solid var(--border);">
+            <div style="width:48px;height:48px;background:var(--amber-pale);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:20px;flex-shrink:0;"><i class="fa-solid fa-box-heart"></i></div>
+            <div><h4 style="margin-bottom:6px;color:var(--brown-deep);font-size:16px">Preparation</h4><p style="font-size:13px">Your kitten receives a final health exam, vaccination booster if due, full grooming, and a HelloKitty welcome kit including food, blanket, and care guide.</p></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start; padding: 20px; background: var(--warm-white); border-radius: var(--radius-md); border: 1px solid var(--border);">
+            <div style="width:48px;height:48px;background:var(--amber-pale);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:20px;flex-shrink:0;"><i class="fa-solid fa-truck-fast"></i></div>
+            <div><h4 style="margin-bottom:6px;color:var(--brown-deep);font-size:16px">Delivery</h4><p style="font-size:13px">All deliveries use climate-controlled vehicles with a dedicated pet handler. Live GPS tracking is shared with you the morning of delivery. Nationwide coverage — door to door.</p></div>
+          </div>
+          <div style="display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start; padding: 20px; background: var(--warm-white); border-radius: var(--radius-md); border: 1px solid var(--border);">
+            <div style="width:48px;height:48px;background:var(--amber-pale);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:20px;flex-shrink:0;"><i class="fa-solid fa-shield-heart"></i></div>
+            <div><h4 style="margin-bottom:6px;color:var(--brown-deep);font-size:16px">Health Guarantee</h4><p style="font-size:13px">All kittens come with a 30-day health guarantee and 2-year pedigree warranty. If any hereditary condition is found, we cover vet bills or offer a full replacement.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RELATED CATS -->
+<section class="section" style="background: var(--warm-white); padding-top: 0;">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;">
+      <div>
+        <div class="label-chip"><i class="fa-solid fa-heart"></i> You May Also Like</div>
+        <h2>Related Kittens</h2>
+      </div>
+      <a href="shop.html" class="btn btn-outline">View All <i class="fa-solid fa-arrow-right"></i></a>
+    </div>
+    <div class="related-grid" id="related-grid"></div>
+  </div>
+</section>
+
+<script>document.write(footerHTML('../'));</script>
+
+<script src="../js/main.js"></script>
+<script>
+(function() {
+  const params = new URLSearchParams(location.search);
+  const id = parseInt(params.get('id'));
+  const cat = CATS.find(c => c.id === id);
+
+  if (!cat) {
+    document.getElementById('detail-layout').innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:80px 0">
+        <i class="fa-solid fa-cat" style="font-size:64px;color:var(--amber);opacity:0.4;display:block;margin-bottom:20px"></i>
+        <h2 style="margin-bottom:12px">Kitten not found</h2>
+        <p style="margin-bottom:28px">The kitten you're looking for may have already found a home!</p>
+        <a href="shop.html" class="btn btn-primary">Browse Available Kittens <i class="fa-solid fa-arrow-right"></i></a>
+      </div>`;
+    return;
+  }
+
+  // Update page title
+  document.title = `${cat.name} — HelloKitty`;
+  document.getElementById('bc-name').textContent = cat.name;
+
+  const wished = Wishlist.items.includes(cat.id);
+  const tagHTML = cat.tag
+    ? `<span class="gallery-tag ${cat.tag === 'Popular' ? 'popular' : cat.tag === 'New' ? 'new-tag' : 'sale'}">${cat.tag}</span>`
+    : '';
+
+  document.getElementById('detail-layout').innerHTML = `
+    <!-- Gallery -->
+    <div class="reveal-left">
+      <div class="gallery-main">
+        <img src="${cat.img}" alt="${cat.name}">
+        ${tagHTML}
+        <button class="gallery-wish ${wished ? 'active' : ''}" data-wish="${cat.id}"
+          onclick="Wishlist.toggle(${cat.id}); this.classList.toggle('active')"
+          aria-label="Toggle wishlist">
+          <i class="${wished ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="reveal-right">
+      <p class="detail-breed"><i class="fa-solid fa-paw"></i> ${cat.breed}</p>
+      <h1 class="detail-name">${cat.name}</h1>
+      <div class="detail-price">${formatPrice(cat.price)}</div>
+
+      <div class="detail-attrs">
+        <div class="detail-attr">
+          <div class="detail-attr-lbl">Age</div>
+          <div class="detail-attr-val">${cat.age}</div>
+        </div>
+        <div class="detail-attr">
+          <div class="detail-attr-lbl">Gender</div>
+          <div class="detail-attr-val">${cat.gender}</div>
+        </div>
+        <div class="detail-attr">
+          <div class="detail-attr-lbl">Colour</div>
+          <div class="detail-attr-val">${cat.color}</div>
+        </div>
+      </div>
+
+      <p class="detail-desc">${cat.desc}</p>
+
+      <div class="detail-badges">
+        ${cat.vaccinated ? '<span class="detail-badge green"><i class="fa-solid fa-shield-virus"></i> Fully Vaccinated</span>' : '<span class="detail-badge grey"><i class="fa-solid fa-shield-slash"></i> Not Vaccinated</span>'}
+        ${cat.microchipped ? '<span class="detail-badge amber"><i class="fa-solid fa-microchip"></i> Microchipped</span>' : '<span class="detail-badge grey"><i class="fa-solid fa-microchip"></i> Not Microchipped</span>'}
+        <span class="detail-badge green"><i class="fa-solid fa-certificate"></i> Pedigree Verified</span>
+        <span class="detail-badge amber"><i class="fa-solid fa-file-medical"></i> Health Certified</span>
+      </div>
+
+      <div class="detail-actions">
+        <button class="btn btn-primary btn-lg" onclick="Cart.add(${JSON.stringify(cat).replace(/"/g,'&quot;')})">
+          <i class="fa-solid fa-bag-shopping"></i> Add to Cart
+        </button>
+        <a href="contact.html?kitten=${encodeURIComponent(cat.name)}" class="btn btn-outline btn-lg">
+          <i class="fa-regular fa-envelope"></i> Enquire
+        </a>
+      </div>
+
+      <div class="guarantee-strip">
+        <div class="guarantee-item"><i class="fa-solid fa-shield-heart"></i><span>30-Day<br>Health Guarantee</span></div>
+        <div class="guarantee-item"><i class="fa-solid fa-truck-fast"></i><span>Nationwide<br>Door Delivery</span></div>
+        <div class="guarantee-item"><i class="fa-solid fa-headset"></i><span>Lifetime<br>Vet Support</span></div>
+      </div>
+    </div>
+  `;
+
+  // Spec grid
+  document.getElementById('spec-grid').innerHTML = [
+    ['Name', cat.name], ['Breed', cat.breed], ['Age', cat.age],
+    ['Gender', cat.gender], ['Colour', cat.color], ['Price', formatPrice(cat.price)],
+    ['Vaccinated', cat.vaccinated ? '✓ Yes' : '✗ No'],
+    ['Microchipped', cat.microchipped ? '✓ Yes' : '✗ No'],
+    ['Pedigree', 'Registered'], ['Health Cert', 'Issued'], ['Delivery', 'Nationwide'], ['Warranty', '2 Years'],
+  ].map(([k,v]) => `<div class="spec-row"><span class="spec-label">${k}</span><span class="spec-val">${v}</span></div>`).join('');
+
+  document.getElementById('about-section').style.display = 'block';
+
+  // Related cats (same breed or random)
+  const related = CATS.filter(c => c.id !== cat.id && c.breed === cat.breed)
+    .concat(CATS.filter(c => c.id !== cat.id && c.breed !== cat.breed))
+    .slice(0, 4);
+  document.getElementById('related-grid').innerHTML = related.map(c => catCardHTML(c)).join('');
+
+  // Tabs
+  document.querySelectorAll('.about-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.about-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  initNav(); initReveal();
+  Cart.badge();
+  Wishlist.items.forEach(id => {
+    document.querySelectorAll(`[data-wish="${id}"]`).forEach(b => b.classList.add('active'));
+  });
+})();
+</script>
+</body>
+</html>
