@@ -409,67 +409,71 @@ function cartDrawerHTML() {
 
 function footerHTML(prefix='') {
   return `
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-logo"><i class="fa-solid fa-paw"></i> HelloKitty</div>
-          <p class="footer-tagline">Nigeria's most trusted premium cat store. Connecting loving homes with pedigree companions since 2022.</p>
-          <div class="footer-social">
-            <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="social-btn" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-            <a href="#" class="social-btn" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-          </div>
-          <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:24px">📞 +234 800 435 5689</p>
-          <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:4px">📧 hello@hellokitty.ng</p>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><i class="fa-solid fa-paw"></i> HelloKitty</div>
+        <p class="footer-tagline">The World's most trusted premium cat store. Connecting loving homes with pedigree companions since 2022.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="social-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="social-btn" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" class="social-btn" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
         </div>
-        <div>
-          <div class="footer-heading">Shop</div>
-          <ul class="footer-links">
+        <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:24px"><i class="fa-solid fa-phone"></i> +234 800 435 5689</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:6px"><i class="fa-solid fa-envelope"></i> hello@hellokitty.ng</p>
+      </div>
+      <div>
+        <div class="footer-heading">Shop</div>
+        <ul class="footer-links">
             <li><a href="${prefix}pages/shop.html">All Cats</a></li>
             <li><a href="${prefix}pages/shop.html?breed=Persian">Persian</a></li>
             <li><a href="${prefix}pages/shop.html?breed=Maine+Coon">Maine Coon</a></li>
             <li><a href="${prefix}pages/shop.html?breed=Siamese">Siamese</a></li>
             <li><a href="${prefix}pages/accessories.html">Accessories</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="footer-heading">Company</div>
-          <ul class="footer-links">
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Company</div>
+        <ul class="footer-links">
             <li><a href="${prefix}pages/about.html">About Us</a></li>
             <li><a href="${prefix}pages/contact.html">Contact</a></li>
             <li><a href="#">Breeder Partners</a></li>
             <li><a href="#">Careers</a></li>
             <li><a href="#">Press</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="footer-heading">Newsletter</div>
-          <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:4px">New kittens & exclusive offers in your inbox.</p>
-          <div class="newsletter-form">
-            <input type="email" class="newsletter-input" placeholder="your@email.com">
-            <button class="newsletter-btn" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
-          </div>
-          <div class="footer-heading" style="margin-top:32px">Support</div>
-          <ul class="footer-links">
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Shipping Info</a></li>
-            <li><a href="#">Health Guarantee</a></li>
-            <li><a href="#">Returns</a></li>
-          </ul>
-        </div>
+        </ul>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2025 HelloKitty Nigeria. All rights reserved.</p>
-        <div class="footer-legal">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Cookie Policy</a>
+      <div>
+        <div class="footer-heading">Newsletter</div>
+        <p style="font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:4px">New kittens & exclusive offers in your inbox.</p>
+        <div class="newsletter-form">
+          <input type="email" class="newsletter-input" placeholder="your@email.com">
+          <button class="newsletter-btn" aria-label="Subscribe"><i class="fa-solid fa-arrow-right"></i></button>
         </div>
+        <div class="footer-heading" style="margin-top:32px">Support</div>
+        <ul class="footer-links">
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Shipping Info</a></li>
+          <li><a href="#">Health Guarantee</a></li>
+          <li><a href="#">Returns</a></li>
+        </ul>
       </div>
     </div>
-  </footer>`;
+    <div class="footer-bottom">
+      <p>&copy; 2026 Hellowkitty Worldwide. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>  
+  
+  
+  
+  
+  
+  `;
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────
