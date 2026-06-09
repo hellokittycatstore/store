@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAQ — HelloKitty</title>
+  <meta name="description" content="Answers to the most common questions about buying kittens, delivery, health guarantees, and more from HelloKitty.">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '2b407ddcce92a71422bc1de977094c68725b8ef0';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+  </script>
+  <style>
+    /* ── FAQ CATEGORIES ── */
+    .faq-nav {
+      display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 56px;
+    }
+    .faq-cat-btn {
+      padding: 10px 22px; border-radius: 30px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.3px;
+      cursor: pointer; border: 1.5px solid var(--border);
+      background: var(--warm-white); color: var(--text-mid);
+      transition: var(--transition);
+    }
+    .faq-cat-btn:hover, .faq-cat-btn.active {
+      background: var(--amber); color: #fff; border-color: var(--amber);
+    }
+
+    /* ── FAQ SECTION HEADING ── */
+    .faq-section { margin-bottom: 60px; }
+    .faq-section-title {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700;
+      color: var(--brown-deep); margin-bottom: 24px;
+      padding-bottom: 16px; border-bottom: 2px solid var(--border);
+    }
+    .faq-section-title i { color: var(--amber); font-size: 22px; }
+
+    /* ── ACCORDION ── */
+    .faq-list { display: flex; flex-direction: column; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-question {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 22px 0; text-align: left;
+      font-size: 15px; font-weight: 600; color: var(--brown-deep);
+      transition: var(--transition); gap: 16px;
+    }
+    .faq-question:hover { color: var(--amber); }
+    .faq-icon { font-size: 14px; color: var(--amber); transition: transform 0.3s; flex-shrink: 0; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-answer {
+      font-size: 14px; color: var(--text-mid); line-height: 1.9;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.45s cubic-bezier(0.4,0,0.2,1), padding 0.3s;
+    }
+    .faq-item.open .faq-answer { max-height: 500px; padding-bottom: 22px; }
+
+    /* ── SIDEBAR ── */
+    .faq-layout { display: grid; grid-template-columns: 260px 1fr; gap: 64px; align-items: start; }
+    .faq-sidebar {
+      position: sticky; top: calc(var(--nav-h) + 24px);
+      background: var(--warm-white); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 32px 28px;
+    }
+    .faq-sidebar-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 20px; }
+    .faq-sidebar-links { display: flex; flex-direction: column; gap: 2px; }
+    .faq-sidebar-link {
+      padding: 10px 14px; border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500; color: var(--text-mid);
+      transition: var(--transition); display: flex; align-items: center; gap: 10px;
+      cursor: pointer; background: none; border: none; text-align: left; width: 100%;
+    }
+    .faq-sidebar-link:hover, .faq-sidebar-link.active { background: var(--amber-pale); color: var(--amber); }
+    .faq-sidebar-link i { width: 16px; text-align: center; font-size: 13px; }
+
+    /* ── HELP CTA ── */
+    .help-cta {
+      background: var(--brown-deep); border-radius: var(--radius-lg);
+      padding: 36px; text-align: center; margin-top: 24px;
+    }
+    .help-cta i { font-size: 36px; color: var(--amber); margin-bottom: 14px; display: block; }
+    .help-cta h4 { color: #fff; font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 10px; }
+    .help-cta p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 20px; }
+
+    @media (max-width: 1024px) { .faq-layout { grid-template-columns: 1fr; } .faq-sidebar { position: static; } }
+  </style>
+</head>
+<body>
+
+<script src="../js/main.js"></script>
+<script>document.write(navHTML('../'));</script>
+<script>document.write(cartDrawerHTML());</script>
+
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <span class="current">FAQ</span>
+    </nav>
+    <div class="label-chip"><i class="fa-solid fa-circle-question"></i> Help Centre</div>
+    <h1 class="page-hero-title">Frequently Asked <em style="font-style:italic;color:var(--amber)">Questions</em></h1>
+    <p class="page-hero-sub">Everything you need to know about buying, delivery, health guarantees, and caring for your HelloKitty companion.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:60px">
+  <div class="container">
+    <div class="faq-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="faq-sidebar reveal">
+        <div class="faq-sidebar-title">Categories</div>
+        <div class="faq-sidebar-links">
+          <button class="faq-sidebar-link active" onclick="scrollTo('sec-buying')"><i class="fa-solid fa-bag-shopping"></i> Buying a Kitten</button>
+          <button class="faq-sidebar-link" onclick="scrollTo('sec-delivery')"><i class="fa-solid fa-truck-fast"></i> Delivery</button>
+          <button class="faq-sidebar-link" onclick="scrollTo('sec-health')"><i class="fa-solid fa-heart-pulse"></i> Health & Guarantee</button>
+          <button class="faq-sidebar-link" onclick="scrollTo('sec-payment')"><i class="fa-solid fa-credit-card"></i> Payments</button>
+          <button class="faq-sidebar-link" onclick="scrollTo('sec-after')"><i class="fa-solid fa-infinity"></i> After Purchase</button>
+          <button class="faq-sidebar-link" onclick="scrollTo('sec-accessories')"><i class="fa-solid fa-box-open"></i> Accessories</button>
+        </div>
+        <div class="help-cta">
+          <i class="fa-solid fa-headset"></i>
+          <h4>Still have questions?</h4>
+          <p>Our team is available Mon–Sat, 8am–7pm WAT.</p>
+          <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center;font-size:13px">
+            <i class="fa-solid fa-paper-plane"></i> Contact Us
+          </a>
+        </div>
+      </aside>
+
+      <!-- FAQ CONTENT -->
+      <div>
+
+        <!-- BUYING A KITTEN -->
+        <div class="faq-section reveal" id="sec-buying">
+          <div class="faq-section-title"><i class="fa-solid fa-bag-shopping"></i> Buying a Kitten</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question">How do I reserve a kitten? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Add your chosen kitten to the cart and proceed to checkout. A 30% deposit (paid via bank transfer or card) officially reserves your kitten and removes it from sale. The balance is due before delivery. You'll receive an order confirmation email within minutes of payment.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Can I see the kitten before committing? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Yes — we strongly encourage it. Contact our team with the kitten you're interested in and we'll arrange a visit to the breeder's facility. Video calls with the breeder are also available for buyers outside Lagos. We want you to feel completely confident before any money changes hands.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Are all kittens pedigree-verified? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Every kitten on HelloKitty comes with full pedigree documentation, including registration papers from the relevant breed association, a verified breeder certificate, and a complete health record. We do not list kittens without verified lineage.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">What age are kittens when they leave the breeder? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Our welfare standard requires all kittens to be a minimum of 12 weeks old before leaving their mother. This ensures proper socialisation, immune development, and weaning. Some breeds (e.g. Persians) may require 14–16 weeks. Exact ages are listed on every product page.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Can I request a specific colour or gender? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Yes. Use our filters on the shop page to sort by breed, gender, and colour. For upcoming litters not yet listed, you can join a waitlist by contacting us. We'll notify you as soon as a matching kitten is available.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DELIVERY -->
+        <div class="faq-section reveal" id="sec-delivery">
+          <div class="faq-section-title"><i class="fa-solid fa-truck-fast"></i> Delivery</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question">How does the delivery process work? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">After payment confirmation, we coordinate with the breeder for a final health check and grooming. Delivery typically takes 3–7 days. On the day, you receive a live GPS tracking link and a dedicated pet handler stays with your kitten throughout the journey. Your kitten arrives with a welcome kit (health records, food sample, care guide).</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Do you deliver outside Lagos? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">We deliver to all 36 Nigerian states. For locations within Lagos, delivery is typically same-day or next-day. Nationwide deliveries take 2–5 business days and use climate-controlled, purpose-built pet transport vehicles. International delivery to select West African countries is available on request.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">What does delivery cost? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Delivery within Lagos Island and Mainland is complimentary on all kitten purchases. Nationwide delivery costs are calculated at checkout based on your state. We never add surprise fees — the price shown at checkout is the final price.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Can I pick up my kitten in person? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Yes. Collection is available from our Lekki office (12 Admiralty Way) by appointment, or directly from the breeder's facility if you prefer. Just let us know your preference at checkout and we'll coordinate.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HEALTH -->
+        <div class="faq-section reveal" id="sec-health">
+          <div class="faq-section-title"><i class="fa-solid fa-heart-pulse"></i> Health & Guarantee</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question">What health guarantee do you offer? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Every HelloKitty kitten comes with a 30-day congenital health guarantee. If your kitten is diagnosed with an inherited or congenital condition by a licensed vet within 30 days, we cover vet bills up to the purchase price or offer a full replacement kitten of equal value. A 2-year hereditary condition warranty is also included for breed-specific diseases (e.g., PKD in Persians, HCM in Maine Coons).</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Are kittens vaccinated before delivery? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Yes. All kittens receive their core vaccinations (FVRCP series) appropriate for their age before leaving the breeder. Vaccination records are included in the welcome kit. We also provide a recommended vaccination schedule for the first year so your vet can continue seamlessly.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Are the kittens microchipped? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Most kittens are microchipped — this is indicated clearly on each listing with a "Microchipped" badge. For kittens not yet microchipped, we offer a complimentary microchipping service during delivery. All microchip registrations are transferred to the new owner.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">What if my kitten gets sick shortly after I bring them home? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Contact our 24/7 vet hotline immediately. Our team will assess the symptoms and advise you. If the illness is linked to a condition pre-existing before delivery, our health guarantee applies. We will never leave a HelloKitty family without support — this is a core promise.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYMENTS -->
+        <div class="faq-section reveal" id="sec-payment">
+          <div class="faq-section-title"><i class="fa-solid fa-credit-card"></i> Payments</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question">What payment methods do you accept? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">We accept bank transfers to our HelloKitty escrow account (GTBank & Zenith), all major debit/credit cards (Visa, Mastercard, Verve), and Flutterwave. A 30% deposit reserves your kitten; the balance is due before delivery.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Is it safe to pay online? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">All card payments are processed through Flutterwave, a PCI-DSS compliant payment gateway. We never store your card details. Bank transfers go to a verified HelloKitty escrow account — we provide the account number only to confirmed buyers and it will always match our registered business name.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Can I pay in instalments? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">We offer a flexible payment plan on select kittens priced above ₦500,000 (or $500). A 30% deposit holds the kitten for up to 30 days, with the balance payable before delivery. Contact us to discuss an instalment plan if needed.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">What is your refund policy? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">If you cancel before the kitten is dispatched, we refund 70% of the deposit (30% is non-refundable to cover breeder preparation costs). If HelloKitty cancels for any reason, you receive a full 100% refund. After delivery, refunds are governed by our health guarantee and returns policy — see the Returns page for details.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AFTER PURCHASE -->
+        <div class="faq-section reveal" id="sec-after">
+          <div class="faq-section-title"><i class="fa-solid fa-infinity"></i> After Purchase</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question">How do I access the 24/7 vet hotline? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">The dedicated vet hotline number (+234 800 435 5700) is included in your welcome kit and order confirmation email. It's available around the clock, staffed by qualified veterinarians, for the lifetime of your pet — not just the first year.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Do you offer ongoing nutrition advice? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Yes. Every HelloKitty customer gets access to our nutrition advisory service. You can book a free 30-minute consultation with one of our feline nutrition specialists via the support portal (link in your welcome kit). We also send monthly breed-specific care tips to your inbox.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Can I return a kitten? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">We do not accept returns for change of mind — kittens are living animals, and rehoming is stressful for them. However, if genuine circumstances make it impossible to keep your kitten, contact us and we will work with you to find an ethical and caring solution, including our rehoming network. Please see our full Returns Policy for details.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">How do I register my kitten's microchip? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Microchip transfer is handled by us on your behalf within 48 hours of confirmed delivery. You'll receive a microchip registration certificate by email. If you need to update owner details in future, contact us or the registry directly (details provided in your documentation).</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACCESSORIES -->
+        <div class="faq-section reveal" id="sec-accessories">
+          <div class="faq-section-title"><i class="fa-solid fa-box-open"></i> Accessories</div>
+          <div class="faq-list">
+            <div class="faq-item">
+              <button class="faq-question">Where do your accessories ship from? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Accessories are dispatched from our Lagos warehouse. Orders placed before 2pm are shipped same day and typically arrive within 1–3 business days in Lagos, and 3–7 days nationwide.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Can I return an accessory? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Accessories can be returned within 14 days of delivery if unused and in original packaging. Food, treats, and opened hygiene items are non-returnable for safety reasons. See our full Returns Policy for the process.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question">Are your foods vet-approved? <i class="fa-solid fa-plus faq-icon"></i></button>
+              <div class="faq-answer">Every food and supplement on HelloKitty has been reviewed by our in-house veterinary team. We only stock grain-free, high-protein formulas with clearly listed ingredients, and we never carry products with artificial preservatives or harmful additives.</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /faq content -->
+    </div><!-- /faq layout -->
+  </div>
+</section>
+
+<script>document.write(footerHTML('../'));</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav(); initReveal(); Cart.badge();
+
+    // Accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // Sidebar scroll
+    window.scrollTo = function(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.faq-sidebar-link').forEach(l => l.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    };
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav')?.classList.toggle('scrolled', window.scrollY > 10);
+    });
+  });
+</script>
+</body>
+</html>

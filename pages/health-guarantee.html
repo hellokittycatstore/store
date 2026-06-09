@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Health Guarantee — HelloKitty</title>
+  <meta name="description" content="HelloKitty's comprehensive health guarantee — 30-day congenital cover, 2-year hereditary warranty, and a lifetime vet hotline for every kitten we place.">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '2b407ddcce92a71422bc1de977094c68725b8ef0';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+  </script>
+  <style>
+    /* ── GUARANTEE TIERS ── */
+    .guarantee-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .guarantee-card {
+      background: var(--warm-white); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 40px 36px;
+      position: relative; overflow: hidden; transition: var(--transition);
+    }
+    .guarantee-card.featured {
+      border-color: var(--amber);
+      background: linear-gradient(140deg, var(--amber-pale) 0%, var(--warm-white) 60%);
+    }
+    .guarantee-card:hover { box-shadow: var(--shadow-md); transform: translateY(-5px); }
+    .guarantee-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--amber), var(--amber-light));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+    }
+    .guarantee-card:hover::before { transform: scaleX(1); }
+    .guarantee-card.featured::before { transform: scaleX(1); }
+
+    .g-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--amber); color: #fff;
+      font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .g-icon {
+      width: 64px; height: 64px; border-radius: var(--radius-md);
+      background: var(--amber-pale); color: var(--amber);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 20px; transition: var(--transition);
+    }
+    .guarantee-card:hover .g-icon, .guarantee-card.featured .g-icon {
+      background: var(--amber); color: #fff;
+    }
+    .g-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700;
+      color: var(--brown-deep); margin-bottom: 8px;
+    }
+    .g-period {
+      font-size: 13px; font-weight: 700; color: var(--amber); letter-spacing: 0.5px;
+      margin-bottom: 16px;
+    }
+    .g-list { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .g-list-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: var(--text-mid); line-height: 1.6;
+    }
+    .g-list-item i { color: var(--amber); margin-top: 3px; flex-shrink: 0; }
+
+    /* ── PROCESS STEPS ── */
+    .claim-steps { display: flex; flex-direction: column; gap: 0; max-width: 760px; margin: 0 auto; }
+    .claim-step {
+      display: grid; grid-template-columns: 80px 1fr; gap: 28px;
+      padding: 32px 0; border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .claim-step:last-child { border-bottom: none; }
+    .claim-step-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--amber); color: #fff;
+      font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 6px 20px rgba(196,122,53,0.35); flex-shrink: 0;
+    }
+    .claim-step-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 700;
+      color: var(--brown-deep); margin-bottom: 6px;
+    }
+
+    /* ── COVERAGE TABLE ── */
+    .coverage-table { width: 100%; border-collapse: collapse; }
+    .coverage-table th, .coverage-table td {
+      padding: 14px 20px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px;
+    }
+    .coverage-table th {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--amber); background: var(--amber-pale);
+    }
+    .coverage-table tr:last-child td { border-bottom: none; }
+    .coverage-table tr:hover td { background: var(--cream); }
+    .covered { color: #276749; font-weight: 700; }
+    .not-covered { color: #C53030; font-weight: 700; }
+
+    /* ── PROMISE BAND ── */
+    .promise-band {
+      background: var(--brown-deep); padding: 80px 0;
+      position: relative; overflow: hidden;
+    }
+    .promise-band::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(196,122,53,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .promise-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; position: relative; z-index: 1; }
+    .promise-item { text-align: center; }
+    .promise-icon { font-size: 36px; color: var(--amber); margin-bottom: 14px; }
+    .promise-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .promise-text { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.7; }
+
+    @media (max-width: 1024px) { .guarantee-grid { grid-template-columns: 1fr 1fr; } .promise-grid { grid-template-columns: 1fr 1fr; gap: 40px; } }
+    @media (max-width: 768px) { .guarantee-grid { grid-template-columns: 1fr; } .promise-grid { grid-template-columns: 1fr 1fr; } .claim-step { grid-template-columns: 56px 1fr; gap: 20px; } }
+    @media (max-width: 480px) { .promise-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<script src="../js/main.js"></script>
+<script>document.write(navHTML('../'));</script>
+<script>document.write(cartDrawerHTML());</script>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <span class="current">Health Guarantee</span>
+    </nav>
+    <div class="label-chip"><i class="fa-solid fa-shield-heart"></i> Our Promise</div>
+    <h1 class="page-hero-title">A Guarantee as Strong as Our <em style="font-style:italic;color:var(--amber)">Love for Cats</em></h1>
+    <p class="page-hero-sub">Every HelloKitty kitten is backed by multi-tier health protection — so you can welcome your new companion with complete confidence.</p>
+  </div>
+</section>
+
+<!-- GUARANTEE TIERS -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center; max-width:560px; margin:0 auto 64px;" class="reveal">
+      <div class="label-chip"><i class="fa-solid fa-layer-group"></i> Coverage Tiers</div>
+      <h2>Three Layers of Protection</h2>
+      <p>From the moment your kitten arrives to the end of their life, HelloKitty stands behind every placement.</p>
+    </div>
+    <div class="guarantee-grid">
+
+      <div class="guarantee-card reveal">
+        <div class="g-icon"><i class="fa-solid fa-syringe"></i></div>
+        <div class="g-title">Pre-Delivery Health Certification</div>
+        <div class="g-period">Included with every kitten</div>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.8">Before your kitten leaves our partner breeder, they receive a full veterinary examination and age-appropriate vaccinations. You receive a signed health certificate, vaccination record, and deworming documentation.</p>
+        <div class="g-list">
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Licensed vet pre-departure examination</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>FVRCP vaccination series (age-appropriate)</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Deworming & flea treatment</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Signed health certificate included</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Microchip transfer documentation</div>
+        </div>
+      </div>
+
+      <div class="guarantee-card featured reveal reveal-delay-1">
+        <div class="g-badge"><i class="fa-solid fa-star"></i> Core Guarantee</div>
+        <div class="g-icon"><i class="fa-solid fa-shield-virus"></i></div>
+        <div class="g-title">30-Day Congenital Health Guarantee</div>
+        <div class="g-period">From delivery date</div>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.8">If your kitten is diagnosed with a congenital or inherited condition by a licensed veterinarian within 30 days of delivery, HelloKitty covers vet bills up to the kitten's purchase price — or offers a full replacement kitten of equal value.</p>
+        <div class="g-list">
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Up to 100% of purchase price in vet bill coverage</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Or full replacement kitten of equal value</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Covers all congenital & inherited conditions</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>No excess fee or deductible</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Claim processed within 5 business days</div>
+        </div>
+      </div>
+
+      <div class="guarantee-card reveal reveal-delay-2">
+        <div class="g-icon"><i class="fa-solid fa-dna"></i></div>
+        <div class="g-title">2-Year Hereditary Condition Warranty</div>
+        <div class="g-period">From delivery date</div>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.8">Breed-specific hereditary diseases — such as PKD in Persians, HCM in Maine Coons, or progressive retinal atrophy in Abyssinians — are covered for two full years. If diagnosed, we work with you on a care plan and partial cost sharing.</p>
+        <div class="g-list">
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Covers breed-specific hereditary diseases</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Up to 50% cost-sharing on vet bills</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Replacement option available for severe cases</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>Requires diagnosis by board-certified vet</div>
+          <div class="g-list-item"><i class="fa-solid fa-check"></i>International claims accepted</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROMISE BAND -->
+<div class="promise-band">
+  <div class="container">
+    <div class="promise-grid">
+      <div class="promise-item reveal">
+        <div class="promise-icon"><i class="fa-solid fa-phone-volume"></i></div>
+        <div class="promise-title">Lifetime Vet Hotline</div>
+        <p class="promise-text">24/7 access to qualified veterinarians for the full life of your cat — not just the warranty period.</p>
+      </div>
+      <div class="promise-item reveal reveal-delay-1">
+        <div class="promise-icon"><i class="fa-solid fa-file-medical"></i></div>
+        <div class="promise-title">Full Documentation</div>
+        <p class="promise-text">Every kitten ships with a comprehensive welcome kit including all health records, microchip details, and a care guide.</p>
+      </div>
+      <div class="promise-item reveal reveal-delay-2">
+        <div class="promise-icon"><i class="fa-solid fa-handshake"></i></div>
+        <div class="promise-title">Ethical Breeders Only</div>
+        <p class="promise-text">We partner exclusively with TICA-registered, welfare-certified breeders who meet HelloKitty's strict health and care standards.</p>
+      </div>
+      <div class="promise-item reveal reveal-delay-3">
+        <div class="promise-icon"><i class="fa-solid fa-globe"></i></div>
+        <div class="promise-title">International Coverage</div>
+        <p class="promise-text">Our guarantee applies worldwide. Whether you're in Lagos, London, or Los Angeles, your kitten is protected.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT'S COVERED TABLE -->
+<section class="section">
+  <div class="container">
+    <div style="max-width: 860px; margin: 0 auto;">
+      <div style="text-align:center; margin-bottom:48px;" class="reveal">
+        <div class="label-chip"><i class="fa-solid fa-table-list"></i> Coverage Details</div>
+        <h2>What's Covered & What's Not</h2>
+        <p>Transparency is a HelloKitty core value. Here's the full picture, clearly stated.</p>
+      </div>
+      <div style="background:var(--warm-white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);" class="reveal">
+        <table class="coverage-table">
+          <thead>
+            <tr>
+              <th>Condition / Situation</th>
+              <th>30-Day</th>
+              <th>2-Year Hereditary</th>
+              <th>Lifetime Vet Support</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Congenital defects (heart, kidneys, liver)</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Yes</td>
+            </tr>
+            <tr>
+              <td>Breed-specific hereditary disease (PKD, HCM, PRA)</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Yes</td>
+            </tr>
+            <tr>
+              <td>Pre-existing vaccination side effects</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Covered</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Yes</td>
+            </tr>
+            <tr>
+              <td>Illness caused by buyer's negligence or environment</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Yes</td>
+            </tr>
+            <tr>
+              <td>Injury from accidents after delivery</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Yes</td>
+            </tr>
+            <tr>
+              <td>Routine veterinary care (vaccines, neutering, dental)</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Advice only</td>
+            </tr>
+            <tr>
+              <td>Parasites contracted after delivery</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="not-covered"><i class="fa-solid fa-xmark"></i> Not covered</td>
+              <td class="covered"><i class="fa-solid fa-check"></i> Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px;color:var(--text-muted);text-align:center;margin-top:16px;">For full legal terms, please refer to your HelloKitty Purchase Agreement, included in your welcome kit and emailed at the time of purchase.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW TO CLAIM -->
+<section class="section" style="background:var(--cream); padding-top:0;">
+  <div class="container">
+    <div style="text-align:center; max-width:560px; margin:0 auto 64px;" class="reveal">
+      <div class="label-chip"><i class="fa-solid fa-clipboard-list"></i> Claims Process</div>
+      <h2>How to Make a Claim</h2>
+      <p>We keep it simple. No call centres, no lengthy forms — just quick, compassionate support.</p>
+    </div>
+    <div class="claim-steps">
+      <div class="claim-step reveal">
+        <div class="claim-step-num">1</div>
+        <div>
+          <div class="claim-step-title">Contact Our Vet Hotline Immediately</div>
+          <p>Call or WhatsApp our 24/7 vet line (+1 503 555 0148) as soon as you notice a concern. Our team will assess symptoms and guide your next steps. Don't wait — early action is always better for your kitten.</p>
+        </div>
+      </div>
+      <div class="claim-step reveal">
+        <div class="claim-step-num">2</div>
+        <div>
+          <div class="claim-step-title">Visit a Licensed Veterinarian</div>
+          <p>Take your kitten to a licensed vet for a formal diagnosis. Ask for a written report detailing the condition, diagnosis method, and their professional opinion on cause. We cover any breed-registered vet worldwide.</p>
+        </div>
+      </div>
+      <div class="claim-step reveal">
+        <div class="claim-step-num">3</div>
+        <div>
+          <div class="claim-step-title">Submit Your Claim Online</div>
+          <p>Email <a href="mailto:claims@hellokitty.store" style="color:var(--amber);font-weight:600">claims@hellokitty.store</a> with your order number, the vet's written report, and itemised receipts. Our team reviews all claims within 5 business days.</p>
+        </div>
+      </div>
+      <div class="claim-step reveal">
+        <div class="claim-step-num">4</div>
+        <div>
+          <div class="claim-step-title">Receive Your Resolution</div>
+          <p>Once approved, vet bill reimbursements are processed via bank transfer within 3 business days. If a replacement kitten is chosen, we'll work with you to select one that's a perfect match for your home.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-sm">
+  <div class="container" style="text-align:center;">
+    <div class="reveal">
+      <h3 style="margin-bottom:12px">Still Have Questions?</h3>
+      <p style="max-width:480px;margin:0 auto 28px;">Our team is happy to walk you through any aspect of the guarantee before you purchase. Reach us any time.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-primary btn-lg">Contact Us <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="faq.html" class="btn btn-outline btn-lg">Read FAQ</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>document.write(footerHTML('../'));</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav(); initReveal(); Cart.badge();
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav')?.classList.toggle('scrolled', window.scrollY > 10);
+    });
+  });
+</script>
+</body>
+</html>

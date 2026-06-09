@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Returns Policy — HelloKitty</title>
+  <meta name="description" content="HelloKitty's transparent, fair returns and refund policy for kittens and accessories. Understand your rights before and after purchase.">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '2b407ddcce92a71422bc1de977094c68725b8ef0';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+  </script>
+  <style>
+    /* ── POLICY CARDS ── */
+    .policy-split { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-bottom: 60px; }
+    .policy-card {
+      background: var(--warm-white); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 40px 36px;
+      transition: var(--transition);
+    }
+    .policy-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .policy-card-icon {
+      width: 56px; height: 56px; border-radius: var(--radius-md);
+      background: var(--amber-pale); color: var(--amber);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 20px; transition: var(--transition);
+    }
+    .policy-card:hover .policy-card-icon { background: var(--amber); color: #fff; }
+    .policy-card-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700;
+      color: var(--brown-deep); margin-bottom: 12px;
+    }
+
+    /* ── REFUND TIMELINE ── */
+    .refund-timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item {
+      display: grid; grid-template-columns: 120px 1fr; gap: 32px;
+      padding: 28px 0; border-bottom: 1px solid var(--border); align-items: flex-start;
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .timeline-phase {
+      background: var(--amber-pale); border-radius: var(--radius-md);
+      padding: 14px 10px; text-align: center;
+    }
+    .timeline-phase-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 4px; }
+    .timeline-phase-value { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; color: var(--brown-deep); line-height: 1; }
+    .timeline-phase-unit { font-size: 11px; color: var(--text-muted); }
+    .timeline-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--brown-deep); margin-bottom: 6px; }
+    .timeline-detail { font-size: 14px; color: var(--text-mid); line-height: 1.8; }
+
+    /* ── ACCESSORY TABLE ── */
+    .returns-table { width: 100%; border-collapse: collapse; }
+    .returns-table th, .returns-table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid var(--border); font-size: 14px; }
+    .returns-table th { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--amber); background: var(--amber-pale); }
+    .returns-table tr:last-child td { border-bottom: none; }
+    .returns-table tr:hover td { background: var(--cream); }
+    .tag-yes { background: rgba(47,133,90,0.1); color: #276749; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 20px; display: inline-block; }
+    .tag-no { background: rgba(197,48,48,0.1); color: #C53030; font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 20px; display: inline-block; }
+    .tag-partial { background: rgba(196,122,53,0.12); color: var(--amber); font-weight: 700; font-size: 12px; padding: 3px 10px; border-radius: 20px; display: inline-block; }
+
+    /* ── NOTICE BANNER ── */
+    .notice-banner {
+      background: var(--amber-pale); border: 1px solid rgba(196,122,53,0.3);
+      border-radius: var(--radius-lg); padding: 28px 32px;
+      display: flex; gap: 20px; align-items: flex-start;
+      margin-bottom: 60px;
+    }
+    .notice-icon { font-size: 28px; color: var(--amber); flex-shrink: 0; margin-top: 2px; }
+    .notice-title { font-weight: 700; color: var(--brown-deep); font-size: 16px; margin-bottom: 6px; }
+    .notice-text { font-size: 14px; color: var(--text-mid); line-height: 1.8; }
+
+    @media (max-width: 768px) { .policy-split { grid-template-columns: 1fr; } .timeline-item { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<script src="../js/main.js"></script>
+<script>document.write(navHTML('../'));</script>
+<script>document.write(cartDrawerHTML());</script>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <span class="current">Returns Policy</span>
+    </nav>
+    <div class="label-chip"><i class="fa-solid fa-rotate-left"></i> Returns</div>
+    <h1 class="page-hero-title">Clear, Fair & <em style="font-style:italic;color:var(--amber)">Transparent</em></h1>
+    <p class="page-hero-sub">Our returns policy is designed with both your rights and the welfare of our kittens in mind. Read through everything before you purchase.</p>
+  </div>
+</section>
+
+<section class="section" style="padding-top:60px;">
+  <div class="container">
+
+    <!-- ANIMAL WELFARE NOTICE -->
+    <div class="notice-banner reveal">
+      <div class="notice-icon"><i class="fa-solid fa-paw"></i></div>
+      <div>
+        <div class="notice-title">A Note on Kitten Welfare</div>
+        <p class="notice-text">Unlike a product, a kitten is a living being who forms bonds and experiences stress from rehoming. HelloKitty does not accept "change of mind" returns. Instead, we invest deeply in helping you choose the right breed, understand care requirements, and prepare your home — so returns are rarely needed. If exceptional circumstances arise, our welfare team will always work with you to find the most compassionate solution.</p>
+      </div>
+    </div>
+
+    <!-- KITTEN & ACCESSORY SPLIT -->
+    <div style="text-align:center; max-width:560px; margin:0 auto 48px;" class="reveal">
+      <div class="label-chip"><i class="fa-solid fa-scale-balanced"></i> Policy Overview</div>
+      <h2>Kittens vs. Accessories</h2>
+    </div>
+
+    <div class="policy-split">
+      <div class="policy-card reveal">
+        <div class="policy-card-icon"><i class="fa-solid fa-cat"></i></div>
+        <div class="policy-card-title">Kittens</div>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.8;margin-bottom:16px">Returns of live kittens are not accepted for change of mind. However, the following situations are handled compassionately:</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-mid)">
+            <i class="fa-solid fa-circle-check" style="color:var(--amber);margin-top:3px;flex-shrink:0"></i>
+            <span><strong style="color:var(--brown-deep)">Health Guarantee Claim:</strong> If a covered condition is diagnosed within 30 days, a replacement kitten or refund is offered per our Health Guarantee terms.</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-mid)">
+            <i class="fa-solid fa-circle-check" style="color:var(--amber);margin-top:3px;flex-shrink:0"></i>
+            <span><strong style="color:var(--brown-deep)">Emergency Rehoming:</strong> If you genuinely cannot keep your kitten, contact our welfare team. We maintain a trusted rehoming network and will facilitate a safe placement at no charge to you.</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-mid)">
+            <i class="fa-solid fa-circle-check" style="color:var(--amber);margin-top:3px;flex-shrink:0"></i>
+            <span><strong style="color:var(--brown-deep)">HelloKitty-Initiated Cancellation:</strong> If we cancel your order for any reason, you receive a 100% refund, no questions asked.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="policy-card reveal reveal-delay-1">
+        <div class="policy-card-icon"><i class="fa-solid fa-box-open"></i></div>
+        <div class="policy-card-title">Accessories & Supplies</div>
+        <p style="font-size:14px;color:var(--text-mid);line-height:1.8;margin-bottom:16px">Accessories can be returned within 14 days of delivery if they meet the following conditions:</p>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-mid)">
+            <i class="fa-solid fa-circle-check" style="color:var(--amber);margin-top:3px;flex-shrink:0"></i>
+            <span>Item is unused, undamaged, and in original packaging</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-mid)">
+            <i class="fa-solid fa-circle-check" style="color:var(--amber);margin-top:3px;flex-shrink:0"></i>
+            <span>Return is initiated by emailing <a href="mailto:returns@hellokitty.store" style="color:var(--amber);font-weight:600">returns@hellokitty.store</a> within the 14-day window</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-mid)">
+            <i class="fa-solid fa-circle-xmark" style="color:#C53030;margin-top:3px;flex-shrink:0"></i>
+            <span>Food, treats, supplements, and opened hygiene products cannot be returned for safety reasons</span>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--text-mid)">
+            <i class="fa-solid fa-circle-check" style="color:var(--amber);margin-top:3px;flex-shrink:0"></i>
+            <span>Defective or damaged items are covered regardless of time, with photographic evidence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFUND TIMELINE -->
+    <div style="text-align:center; max-width:560px; margin:0 auto 48px;" class="reveal">
+      <div class="label-chip"><i class="fa-solid fa-clock-rotate-left"></i> Deposits & Refunds</div>
+      <h2>Deposit Refund Schedule</h2>
+      <p>Cancellation before delivery? Here's exactly what you can expect.</p>
+    </div>
+
+    <div style="max-width:760px;margin:0 auto 80px;" class="reveal">
+      <div class="refund-timeline">
+        <div class="timeline-item">
+          <div class="timeline-phase">
+            <span class="timeline-phase-label">Cancel within</span>
+            <div class="timeline-phase-value">24</div>
+            <div class="timeline-phase-unit">hours of deposit</div>
+          </div>
+          <div>
+            <div class="timeline-title">Full Deposit Refund</div>
+            <p class="timeline-detail">If you change your mind within 24 hours of placing your deposit, you'll receive a 100% refund with no questions asked. We understand that decisions sometimes need to be reconsidered, and we make it easy to do so.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-phase">
+            <span class="timeline-phase-label">Cancel after</span>
+            <div class="timeline-phase-value">24h</div>
+            <div class="timeline-phase-unit">before dispatch</div>
+          </div>
+          <div>
+            <div class="timeline-title">70% Deposit Refund</div>
+            <p class="timeline-detail">A 30% non-refundable portion covers breeder preparation costs — feeding, grooming, vet admin, and the time the kitten was held off-market. 70% is refunded within 5 business days to your original payment method.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-phase">
+            <span class="timeline-phase-label">After</span>
+            <div class="timeline-phase-value">Dispatch</div>
+            <div class="timeline-phase-unit">in transit</div>
+          </div>
+          <div>
+            <div class="timeline-title">No Refund on Kitten</div>
+            <p class="timeline-detail">Once your kitten is in transit, no cancellation refund is available for the kitten. However, if you have a genuine emergency, call us immediately and our welfare team will discuss options. Health guarantee claims remain available after delivery.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-phase">
+            <span class="timeline-phase-label">HelloKitty</span>
+            <div class="timeline-phase-value">Cancels</div>
+            <div class="timeline-phase-unit">for any reason</div>
+          </div>
+          <div>
+            <div class="timeline-title">100% Full Refund</div>
+            <p class="timeline-detail">If HelloKitty cancels your order — due to kitten illness, breeder issues, or any other circumstance — you receive a 100% refund of all amounts paid, processed within 3 business days. We'll also offer priority access to a replacement listing of equal value.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ACCESSORIES RETURN TABLE -->
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div style="text-align:center; margin-bottom:48px;" class="reveal">
+        <div class="label-chip"><i class="fa-solid fa-box"></i> Accessories</div>
+        <h2>Accessory Return Eligibility</h2>
+      </div>
+      <div style="background:var(--warm-white);border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--border);" class="reveal">
+        <table class="returns-table">
+          <thead>
+            <tr>
+              <th>Product Category</th>
+              <th>Returnable?</th>
+              <th>Window</th>
+              <th>Condition Required</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Beds, carriers & furniture</td>
+              <td><span class="tag-yes">Yes</span></td>
+              <td>14 days</td>
+              <td>Unused, original packaging</td>
+            </tr>
+            <tr>
+              <td>Toys & enrichment items</td>
+              <td><span class="tag-yes">Yes</span></td>
+              <td>14 days</td>
+              <td>Unused, original packaging</td>
+            </tr>
+            <tr>
+              <td>Grooming tools</td>
+              <td><span class="tag-yes">Yes</span></td>
+              <td>14 days</td>
+              <td>Unused, original packaging</td>
+            </tr>
+            <tr>
+              <td>Collars, harnesses & leads</td>
+              <td><span class="tag-partial">Partial</span></td>
+              <td>14 days</td>
+              <td>Unworn with hygiene seal intact</td>
+            </tr>
+            <tr>
+              <td>Food, treats & supplements</td>
+              <td><span class="tag-no">No</span></td>
+              <td>—</td>
+              <td>Non-returnable for safety reasons</td>
+            </tr>
+            <tr>
+              <td>Litter & hygiene products (opened)</td>
+              <td><span class="tag-no">No</span></td>
+              <td>—</td>
+              <td>Non-returnable once opened</td>
+            </tr>
+            <tr>
+              <td>Defective or damaged items (any category)</td>
+              <td><span class="tag-yes">Yes</span></td>
+              <td>Anytime</td>
+              <td>Photo evidence required on claim</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-sm" style="background:var(--cream);">
+  <div class="container" style="text-align:center;">
+    <div class="reveal">
+      <h3 style="margin-bottom:12px">Need to Start a Return?</h3>
+      <p style="max-width:480px;margin:0 auto 28px;">Email our support team or use the contact form and we'll guide you through the process within one business day.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-primary btn-lg">Contact Support <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="health-guarantee.html" class="btn btn-outline btn-lg">Health Guarantee</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>document.write(footerHTML('../'));</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav(); initReveal(); Cart.badge();
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav')?.classList.toggle('scrolled', window.scrollY > 10);
+    });
+  });
+</script>
+</body>
+</html>

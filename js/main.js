@@ -453,10 +453,11 @@ function footerHTML(prefix='') {
         </div>
         <div class="footer-heading" style="margin-top:32px">Support</div>
         <ul class="footer-links">
-          <li><a href="#">FAQ</a></li>
-          <li><a href="#">Shipping Info</a></li>
-          <li><a href="#">Health Guarantee</a></li>
-          <li><a href="#">Returns</a></li>
+          <li><a href="${prefix}pages/faq.html">FAQ</a></li>
+          <li><a href="${prefix}pages/shipping.html">Shipping Info</a></li>
+          <li><a href="${prefix}pages/health-guarantee.html">Health Guarantee</a></li>
+          <li><a href="${prefix}pages/returns.html">Returns</a></li>
+          <li><a href="#">Privacy Policy</a></li>          
         </ul>
       </div>
     </div>
