@@ -73,7 +73,7 @@ window.smartsupp||(function(d) {
     .payment-option input[type="radio"] { accent-color: var(--amber); width: 18px; height: 18px; }
     .payment-label { font-weight: 700; font-size: 14px; color: var(--brown-deep); }
     .payment-sub { font-size: 12px; color: var(--text-muted); }
-    .payment-icons { margin-left: auto; display: flex; gap: 6px; }
+    .payment-icons { display: flex; gap: 6px; justify-content: center;align-items: center;height: fit-content;}
     .card-icon { padding: 4px 10px; background: var(--cream); border-radius: 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); border: 1px solid var(--border); }
 
     .card-fields { margin-top: 20px; display: none; }
@@ -132,11 +132,15 @@ window.smartsupp||(function(d) {
       margin: 0 auto 28px; font-size: 42px; color: #276749;
     }
 
+    .responsive-wrap{display: flex; justify-content: space-between; gap: 10px; align-items: center; width: 100%;}
+
     @media (max-width: 1024px) {
       .checkout-layout { grid-template-columns: 1fr; }
       .order-summary { position: static; }
     }
     @media (max-width: 768px) {
+
+    .responsive-wrap { flex-direction: column;align-items: start;justify-content: start;}   
       .checkout-section { padding: 28px 24px; }
       .checkout-steps { gap: 0; }
       .step-label { display: none; }
@@ -243,14 +247,16 @@ window.smartsupp||(function(d) {
           <div class="payment-options">
             <label class="payment-option selected" id="pay-card-opt">
               <input type="radio" name="payment" value="card" checked>
-              <div>
-                <div class="payment-label">Debit / Credit Card</div>
-                <div class="payment-sub">Visa, Mastercard, Verve</div>
-              </div>
-              <div class="payment-icons">
-                <span class="card-icon">VISA</span>
-                <span class="card-icon">MC</span>
-                <span class="card-icon">VRV</span>
+              <div class="responsive-wrap">
+                <div>
+                  <div class="payment-label">Debit / Credit Card</div>
+                  <div class="payment-sub">Visa, Mastercard, Verve</div>
+                </div>
+                <div class="payment-icons">
+                  <span class="card-icon">VISA</span>
+                  <span class="card-icon">MC</span>
+                  <span class="card-icon">VRV</span>
+                </div>
               </div>
             </label>
             <div class="card-fields show" id="card-fields">
