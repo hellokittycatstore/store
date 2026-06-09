@@ -4,27 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact Us — HelloKitty</title>
-  <meta name="description" content="Get in touch with the HelloKitty team. Questions about kittens, delivery, or our breeding partners — we're here to help.">
+  <meta name="description" content="Get in touch with the HelloKitty team in Portland, Oregon. Questions about kittens, worldwide delivery, or our breeding partners — we're here to help.">
   <link rel="stylesheet" href="../css/global.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <!-- Smartsupp Live Chat script -->
-<script type="text/javascript">
-var _smartsupp = _smartsupp || {};
-_smartsupp.key = '2b407ddcce92a71422bc1de977094c68725b8ef0';
-window.smartsupp||(function(d) {
-  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-  c.type='text/javascript';c.charset='utf-8';c.async=true;
-  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-})(document);
-</script>
-<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
-
+  <script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '2b407ddcce92a71422bc1de977094c68725b8ef0';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+  </script>
+  <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
   <style>
-    /* ── CONTACT LAYOUT ── */
     .contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 60px; align-items: start; }
 
-    /* ── CONTACT INFO ── */
     .contact-card {
       background: var(--warm-white); border-radius: var(--radius-lg);
       border: 1px solid var(--border); padding: 40px 36px;
@@ -46,18 +42,14 @@ window.smartsupp||(function(d) {
     .contact-method-value { font-size: 16px; font-weight: 700; color: var(--brown-deep); margin-bottom: 4px; }
     .contact-method-sub { font-size: 13px; color: var(--text-muted); }
 
-    /* ── FORM CARD ── */
     .form-card {
       background: var(--warm-white); border-radius: var(--radius-xl);
       border: 1px solid var(--border); padding: 48px 44px;
       box-shadow: var(--shadow-md);
     }
 
-    /* ── FAQ ── */
     .faq-list { display: flex; flex-direction: column; gap: 0; }
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-    }
+    .faq-item { border-bottom: 1px solid var(--border); }
     .faq-item:last-child { border-bottom: none; }
     .faq-question {
       width: 100%; background: none; border: none; cursor: pointer;
@@ -75,19 +67,21 @@ window.smartsupp||(function(d) {
     }
     .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 20px; }
 
-    /* ── MAP PLACEHOLDER ── */
     .map-wrap {
       border-radius: var(--radius-xl); overflow: hidden;
       background: var(--cream-dark); position: relative;
-      height: 320px; border: 1px solid var(--border);
+      height: 260px; border: 1px solid var(--border);
       display: flex; align-items: center; justify-content: center;
+      margin-top: 28px;
     }
     .map-pin { text-align: center; }
     .map-pin i { font-size: 48px; color: var(--amber); margin-bottom: 12px; display: block; }
 
-    @media (max-width: 1024px) {
-      .contact-grid { gap: 40px; }
-    }
+    /* hours table */
+    .hours-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+    .hours-table td { padding: 6px 0; font-size: 13px; color: var(--text-mid); }
+    .hours-table td:last-child { text-align: right; color: var(--brown-deep); font-weight: 600; }
+
     @media (max-width: 768px) {
       .contact-grid { grid-template-columns: 1fr; }
       .form-card { padding: 32px 28px; }
@@ -100,7 +94,6 @@ window.smartsupp||(function(d) {
 <script>document.write(navHTML('../'));</script>
 <script>document.write(cartDrawerHTML());</script>
 
-<!-- PAGE HERO -->
 <section class="page-hero">
   <div class="container">
     <nav class="breadcrumb">
@@ -110,30 +103,29 @@ window.smartsupp||(function(d) {
     </nav>
     <div class="label-chip"><i class="fa-solid fa-headset"></i> We're Here</div>
     <h1 class="page-hero-title">Get in <em style="font-style:italic;color:var(--amber)">Touch</em></h1>
-    <p class="page-hero-sub">Have a question about a kitten, delivery, or one of our breeders? Our team typically responds within 2 hours during business hours.</p>
+    <p class="page-hero-sub">Have a question about a kitten, worldwide shipping, or one of our breeders? Our Portland-based team replies within 2 hours during business hours.</p>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section class="section" style="padding-top: 60px;">
   <div class="container">
     <div class="contact-grid">
-      <!-- LEFT: Info -->
+      <!-- LEFT -->
       <div>
         <div class="contact-card reveal">
           <div class="contact-method" style="padding-top:0">
             <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
             <div>
               <div class="contact-method-label">Phone</div>
-              <div class="contact-method-value">+234 800 435 5689</div>
-              <div class="contact-method-sub">Mon–Sat, 8am–7pm WAT</div>
+              <div class="contact-method-value">+1 (503) 555-0192</div>
+              <div class="contact-method-sub">Mon–Sat, 8am–6pm PT</div>
             </div>
           </div>
           <div class="contact-method">
             <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
             <div>
               <div class="contact-method-label">Email</div>
-              <div class="contact-method-value">hello@hellokitty.ng</div>
+              <div class="contact-method-value">hello@hellokitty.com</div>
               <div class="contact-method-sub">We reply within 2 business hours</div>
             </div>
           </div>
@@ -141,40 +133,50 @@ window.smartsupp||(function(d) {
             <div class="contact-icon"><i class="fa-brands fa-whatsapp"></i></div>
             <div>
               <div class="contact-method-label">WhatsApp</div>
-              <div class="contact-method-value">+234 800 435 5689</div>
-              <div class="contact-method-sub">Quick replies, 9am–6pm daily</div>
+              <div class="contact-method-value">+1 (503) 555-0192</div>
+              <div class="contact-method-sub">Quick replies, 9am–6pm PT daily</div>
             </div>
           </div>
           <div class="contact-method">
             <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
             <div>
-              <div class="contact-method-label">Office</div>
-              <div class="contact-method-value">12 Admiralty Way, Lekki</div>
-              <div class="contact-method-sub">Lagos, Nigeria · By appointment</div>
+              <div class="contact-method-label">Headquarters</div>
+              <div class="contact-method-value">2847 NW Thurman Street, Suite 201</div>
+              <div class="contact-method-sub">Portland, Oregon 97210 · By appointment</div>
             </div>
           </div>
           <div class="contact-method">
             <div class="contact-icon"><i class="fa-solid fa-stethoscope"></i></div>
             <div>
               <div class="contact-method-label">Vet Hotline (24/7)</div>
-              <div class="contact-method-value">+234 800 435 5700</div>
+              <div class="contact-method-value">+1 (503) 555-0700</div>
               <div class="contact-method-sub">For HelloKitty customers only</div>
             </div>
           </div>
         </div>
 
-        <div style="margin-top: 24px;" class="reveal reveal-delay-1">
-          <div class="map-wrap">
-            <div class="map-pin">
-              <i class="fa-solid fa-location-dot"></i>
-              <p style="font-weight:600;color:var(--brown-deep);">12 Admiralty Way, Lekki</p>
-              <p style="font-size:13px">Lagos, Nigeria</p>
-            </div>
+        <!-- Business Hours -->
+        <div class="contact-card reveal reveal-delay-1" style="margin-top:20px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:16px"><i class="fa-solid fa-clock"></i> Business Hours (Pacific Time)</div>
+          <table class="hours-table">
+            <tr><td>Monday – Friday</td><td>8:00 AM – 6:00 PM</td></tr>
+            <tr><td>Saturday</td><td>9:00 AM – 4:00 PM</td></tr>
+            <tr><td>Sunday</td><td>Closed (email monitored)</td></tr>
+            <tr><td>Vet Hotline</td><td>24 / 7 / 365</td></tr>
+          </table>
+        </div>
+
+        <!-- Map placeholder -->
+        <div class="map-wrap reveal reveal-delay-2">
+          <div class="map-pin">
+            <i class="fa-solid fa-location-dot"></i>
+            <p style="font-weight:600;color:var(--brown-deep);">2847 NW Thurman Street</p>
+            <p style="font-size:13px;color:var(--text-muted)">Portland, Oregon 97210</p>
           </div>
         </div>
 
         <!-- Social -->
-        <div style="margin-top:28px;" class="reveal reveal-delay-2">
+        <div style="margin-top:28px;" class="reveal reveal-delay-3">
           <p style="font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px;">Find Us Online</p>
           <div style="display:flex;gap:10px;">
             <a href="#" class="social-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
@@ -189,16 +191,16 @@ window.smartsupp||(function(d) {
       <div class="form-card reveal-right">
         <div class="label-chip"><i class="fa-solid fa-paper-plane"></i> Send a Message</div>
         <h2 style="margin-bottom:8px;font-size:clamp(24px,3vw,38px)">How Can We Help?</h2>
-        <p style="margin-bottom:32px;font-size:14px">Fill out the form and a member of our team will get back to you promptly.</p>
+        <p style="margin-bottom:32px;font-size:14px">Fill out the form and a member of our Portland team will get back to you promptly.</p>
 
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">First Name</label>
-            <input type="text" class="form-input" placeholder="Adaeze" id="fn">
+            <input type="text" class="form-input" placeholder="Jane" id="fn">
           </div>
           <div class="form-group">
             <label class="form-label">Last Name</label>
-            <input type="text" class="form-input" placeholder="Okafor" id="ln">
+            <input type="text" class="form-input" placeholder="Smith" id="ln">
           </div>
         </div>
         <div class="form-row">
@@ -208,15 +210,32 @@ window.smartsupp||(function(d) {
           </div>
           <div class="form-group">
             <label class="form-label">Phone (optional)</label>
-            <input type="tel" class="form-input" placeholder="+234 800 000 0000" id="phone">
+            <input type="tel" class="form-input" placeholder="+1 (503) 000-0000" id="phone">
           </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Your Country</label>
+          <select class="form-select" id="country">
+            <option value="">Select your country…</option>
+            <option>United States</option>
+            <option>Canada</option>
+            <option>United Kingdom</option>
+            <option>Australia</option>
+            <option>Germany</option>
+            <option>France</option>
+            <option>Netherlands</option>
+            <option>UAE</option>
+            <option>Singapore</option>
+            <option>Japan</option>
+            <option>Other</option>
+          </select>
         </div>
         <div class="form-group">
           <label class="form-label">Subject</label>
           <select class="form-select" id="subject">
             <option value="">Select a topic…</option>
             <option value="kitten">Question about a kitten</option>
-            <option value="order">Order / delivery</option>
+            <option value="order">Order / international shipping</option>
             <option value="health">Health concern</option>
             <option value="breeder">Breeder partnership</option>
             <option value="accessories">Accessories</option>
@@ -252,28 +271,28 @@ window.smartsupp||(function(d) {
       </div>
       <div class="faq-list reveal">
         <div class="faq-item">
-          <button class="faq-question">How does the delivery process work? <i class="fa-solid fa-plus faq-icon"></i></button>
-          <div class="faq-answer">Once your order is confirmed and payment received, we coordinate with the breeder to prepare your kitten (final health check, grooming, welcome kit). Delivery typically takes 3–7 days depending on location. You'll receive live GPS tracking the morning of delivery, and a dedicated pet handler accompanies your kitten the entire way.</div>
+          <button class="faq-question">How does international delivery work? <i class="fa-solid fa-plus faq-icon"></i></button>
+          <div class="faq-answer">We ship worldwide from our Portland, Oregon headquarters. Once your order is confirmed, we coordinate USDA-approved health certificates, CITES permits (where required), and IATA-compliant airline-approved carriers. A dedicated pet travel coordinator manages your kitten's journey door-to-door. Most international deliveries take 3–10 business days.</div>
         </div>
         <div class="faq-item">
           <button class="faq-question">What does the health guarantee cover? <i class="fa-solid fa-plus faq-icon"></i></button>
-          <div class="faq-answer">Every HelloKitty kitten comes with a 30-day health guarantee. If your kitten is diagnosed with a congenital condition within 30 days, we cover vet bills up to the purchase price or offer a full replacement. A 2-year pedigree warranty is also included for hereditary conditions specific to the breed.</div>
+          <div class="faq-answer">Every HelloKitty kitten comes with a 30-day congenital health guarantee. If your kitten is diagnosed with a congenital condition within 30 days, we cover vet bills up to the purchase price or offer a full replacement. A 2-year warranty is also included for breed-specific hereditary conditions.</div>
         </div>
         <div class="faq-item">
           <button class="faq-question">Can I visit a breeder before buying? <i class="fa-solid fa-plus faq-icon"></i></button>
-          <div class="faq-answer">Absolutely. We encourage prospective buyers to meet their kitten in person before purchase. Simply contact us with the kitten you're interested in and we'll arrange a visit to the breeder's facility at a mutually convenient time.</div>
+          <div class="faq-answer">Absolutely — we encourage it. Domestic buyers can visit partner facilities in Oregon, Washington, California, and beyond. International buyers are offered a live video tour with the breeder. We want you fully confident before any money changes hands.</div>
         </div>
         <div class="faq-item">
           <button class="faq-question">What payment methods do you accept? <i class="fa-solid fa-plus faq-icon"></i></button>
-          <div class="faq-answer">We accept bank transfers to our HelloKitty escrow account, all major credit/debit cards, and Flutterwave. A 30% deposit secures a kitten, with the balance due before delivery. We never release kitten details to strangers without a confirmed deposit.</div>
+          <div class="faq-answer">We accept all major credit and debit cards (Visa, Mastercard, AmEx), bank wire transfer, Stripe, and PayPal. A 30% deposit reserves your kitten; the balance is due before dispatch. International buyers may pay in USD via wire or Stripe.</div>
         </div>
         <div class="faq-item">
-          <button class="faq-question">Do you deliver outside Nigeria? <i class="fa-solid fa-plus faq-icon"></i></button>
-          <div class="faq-answer">We currently deliver nationwide across all 36 Nigerian states. International delivery is available to select West African countries — please contact us directly for a quote and to confirm requirements including import documentation.</div>
+          <button class="faq-question">Do you ship to my country?<i class="fa-solid fa-plus faq-icon"></i></button>
+          <div class="faq-answer">HelloKitty ships to 60+ countries worldwide. We handle all export documentation from the US side. Import permits, quarantine requirements, and any applicable import duties are the buyer's responsibility — we provide a full guide for your country when you place an order.</div>
         </div>
         <div class="faq-item">
           <button class="faq-question">How do I access the 24/7 vet hotline? <i class="fa-solid fa-plus faq-icon"></i></button>
-          <div class="faq-answer">The vet hotline is available to all HelloKitty customers after purchase. You'll receive the dedicated number in your welcome kit. The hotline is staffed by qualified veterinarians and is available 24 hours a day, 7 days a week for the lifetime of your pet.</div>
+          <div class="faq-answer">The hotline number (+1 503-555-0700) is included in your welcome kit and order confirmation email. It's staffed around the clock by licensed veterinarians for the lifetime of your pet — not just the first year.</div>
         </div>
       </div>
     </div>
@@ -283,7 +302,6 @@ window.smartsupp||(function(d) {
 <script>document.write(footerHTML('../'));</script>
 
 <script>
-  // Pre-fill kitten name from URL param
   const urlParams = new URLSearchParams(location.search);
   const kittenParam = urlParams.get('kitten');
   if (kittenParam) {
@@ -301,7 +319,6 @@ window.smartsupp||(function(d) {
       if (a.href.includes('contact')) a.classList.add('active');
     });
 
-    // FAQ accordion
     document.querySelectorAll('.faq-question').forEach(btn => {
       btn.addEventListener('click', () => {
         const item = btn.closest('.faq-item');
@@ -311,7 +328,6 @@ window.smartsupp||(function(d) {
       });
     });
 
-    // Form submit
     document.getElementById('send-btn').addEventListener('click', () => {
       const email = document.getElementById('email').value;
       const msg = document.getElementById('message').value;
@@ -319,7 +335,7 @@ window.smartsupp||(function(d) {
       if (msg.trim().length < 10) { showToast('Please write a message first.', 'error'); return; }
       document.getElementById('send-btn').innerHTML = '<i class="fa-solid fa-circle-check"></i> Message Sent!';
       document.getElementById('send-btn').disabled = true;
-      showToast('Message sent! We\'ll reply within 2 hours. 🐾', 'success');
+      showToast("Message sent! We'll reply within 2 hours. 🐾", 'success');
     });
   });
 </script>

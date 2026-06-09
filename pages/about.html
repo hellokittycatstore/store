@@ -74,8 +74,8 @@ window.smartsupp||(function(d) {
     .team-bio { font-size: 13px; color: var(--text-mid); line-height: 1.7; }
 
     /* ── STATS BAND ── */
-    .stats-band { background: var(--brown-deep); }
-    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stats-band { background: var(--brown-deep); width: 100%;}
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; }
     .stat-block { padding: 56px 40px; border-right: 1px solid rgba(255,255,255,0.08); text-align: center; }
     .stat-block:last-child { border-right: none; }
     .stat-big { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 700; color: var(--amber-light); line-height: 1; }
@@ -107,6 +107,11 @@ window.smartsupp||(function(d) {
     .cert-card:hover { box-shadow: var(--shadow-sm); border-color: var(--amber); }
     .cert-icon { width: 52px; height: 52px; flex-shrink: 0; background: var(--amber-pale); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--amber); }
 
+
+.how-we-got-here-wrap{
+  display:grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items:start;
+}
+
     @media (max-width: 1024px) {
       .team-grid { grid-template-columns: repeat(2, 1fr); }
       .cert-grid { grid-template-columns: repeat(2, 1fr); }
@@ -116,9 +121,12 @@ window.smartsupp||(function(d) {
       .mission-float { top: auto; right: 16px; bottom: -24px; }
       .values-grid { grid-template-columns: 1fr; }
       .team-grid { grid-template-columns: repeat(2, 1fr); }
-      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      .stats-row { grid-template-columns: 1fr; }
       .stat-block { border-bottom: 1px solid rgba(255,255,255,0.08); }
       .cert-grid { grid-template-columns: 1fr; }
+      .how-we-got-here-wrap{grid-template-columns: 1fr;}
+      .how-we-got-here-wrap .reveal-right{order: 1;}
+      .how-we-got-here-wrap .reveal-left{order: 2;}
     }
     @media (max-width: 480px) {
       .team-grid { grid-template-columns: 1fr; }
@@ -247,7 +255,7 @@ window.smartsupp||(function(d) {
 <!-- OUR JOURNEY -->
 <section class="section" style="background: var(--warm-white)">
   <div class="container">
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items:start;">
+    <div class="how-we-got-here-wrap">
       <div class="reveal-left">
         <div class="label-chip"><i class="fa-solid fa-map"></i> Our Journey</div>
         <h2 style="margin-bottom:40px">How We Got Here</h2>
