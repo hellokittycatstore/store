@@ -385,8 +385,9 @@ function navHTML(prefix='') {
     <a href="${prefix}pages/login.html" style="color:var(--amber)">Sign In</a>
   </div>`;
 }
-
-function cartDrawerHTML() {
+  
+function cartDrawerHTML(pages) {
+  const PAGES = getPagesPrefix();
   return `
   <div class="cart-overlay" id="cart-overlay"></div>
   <aside class="cart-drawer" id="cart-drawer" aria-label="Shopping cart">
@@ -400,7 +401,7 @@ function cartDrawerHTML() {
         <span>Total</span>
         <span id="cart-total">$0</span>
       </div>
-      <a href="${location.pathname.includes('/pages/') ? '' : 'pages/'}checkout.html" class="btn btn-primary btn-lg" style="width:100%; justify-content:center">
+      <a href="${PAGES}checkout.html" class="btn btn-primary btn-lg" style="width:100%; justify-content:center">
         Checkout <i class="fa-solid fa-arrow-right"></i>
       </a>
     </div>
@@ -421,8 +422,8 @@ function footerHTML(prefix='') {
           <a href="#" class="social-btn" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
           <a href="#" class="social-btn" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
         </div>
-        <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:24px"><i class="fa-solid fa-phone"></i> +234 800 435 5689</p>
-        <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:6px"><i class="fa-solid fa-envelope"></i> hello@hellokitty.ng</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:24px"><i class="fa-solid fa-phone"></i> +1 (503) 555-0192</p>
+        <p style="font-size:12px;color:rgba(255,255,255,0.25);margin-top:6px"><i class="fa-solid fa-envelope"></i> hello@hellokitty.com</p>
       </div>
       <div>
         <div class="footer-heading">Shop</div>
