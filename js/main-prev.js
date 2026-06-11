@@ -159,92 +159,15 @@ const ACCESSORIES = [
     img:"https://images.unsplash.com/photo-1516222338250-863216ce01ea?w=600&q=80" },
 ];
 
-// ── FLY-TO-CART ANIMATION ─────────────────────────────────────────────
-(function () {
-  const STYLE_ID = 'hk-fly-styles';
-  if (document.getElementById(STYLE_ID)) return;
-  const s = document.createElement('style');
-  s.id = STYLE_ID;
-  s.textContent = `
-    .hk-fly-item {
-      position: fixed; z-index: 99998; pointer-events: none;
-      border-radius: 50%; overflow: hidden;
-      box-shadow: 0 8px 24px rgba(44,24,16,0.35);
-      border: 2.5px solid #fff; will-change: transform, opacity, width, height;
-    }
-    .hk-fly-item img { width:100%; height:100%; object-fit:cover; display:block; border-radius:50%; }
-    @keyframes hk-badge-pop {
-      0%   { transform: scale(1); }
-      40%  { transform: scale(1.7); background: #c8860a; }
-      70%  { transform: scale(0.88); }
-      100% { transform: scale(1); }
-    }
-    .hk-badge-pop { animation: hk-badge-pop 0.42s cubic-bezier(.34,1.56,.64,1) forwards !important; }
-    @keyframes hk-cart-shake {
-      0%,100% { transform: rotate(0deg) scale(1); }
-      20%     { transform: rotate(-12deg) scale(1.18); }
-      40%     { transform: rotate(10deg) scale(1.14); }
-      60%     { transform: rotate(-6deg) scale(1.08); }
-      80%     { transform: rotate(4deg) scale(1.04); }
-    }
-    .hk-cart-shake { animation: hk-cart-shake 0.45s cubic-bezier(.36,.07,.19,.97) forwards !important; }
-  `;
-  document.head.appendChild(s);
-})();
-
-function flyToCart(imgSrc, originEl) {
-  const cartBtn = document.querySelector('[data-cart-open]');
-  if (!cartBtn) return;
-  const from = originEl.getBoundingClientRect();
-  const to   = cartBtn.getBoundingClientRect();
-  const startSize = 72, endSize = 20;
-  const startX = from.left + from.width  / 2 - startSize / 2;
-  const startY = from.top  + from.height / 2 - startSize / 2;
-  const endX   = to.left   + to.width   / 2 - endSize   / 2;
-  const endY   = to.top    + to.height  / 2 - endSize   / 2;
-  const cpX = startX + (endX - startX) * 0.2;
-  const cpY = Math.min(startY, endY) - 120;
-  const fly = document.createElement('div');
-  fly.className = 'hk-fly-item';
-  fly.style.cssText = `width:${startSize}px;height:${startSize}px;left:${startX}px;top:${startY}px;opacity:1;`;
-  fly.innerHTML = `<img src="${imgSrc}" alt="">`;
-  document.body.appendChild(fly);
-  const duration = 640, startTime = performance.now();
-  function ease(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2; }
-  function step(now) {
-    const raw = Math.min((now - startTime) / duration, 1), t = ease(raw);
-    const inv = 1 - t;
-    const x = inv*inv*startX + 2*inv*t*cpX + t*t*endX;
-    const y = inv*inv*startY + 2*inv*t*cpY + t*t*endY;
-    const size = startSize + (endSize - startSize) * t;
-    fly.style.left = x+'px'; fly.style.top = y+'px';
-    fly.style.width = size+'px'; fly.style.height = size+'px';
-    fly.style.opacity = String(raw < 0.85 ? 1 : 1 - (raw - 0.85) / 0.15);
-    fly.style.transform = `rotate(${t * 380}deg)`;
-    if (raw < 1) { requestAnimationFrame(step); return; }
-    fly.remove();
-    cartBtn.classList.remove('hk-cart-shake'); void cartBtn.offsetWidth;
-    cartBtn.classList.add('hk-cart-shake');
-    cartBtn.addEventListener('animationend', () => cartBtn.classList.remove('hk-cart-shake'), { once: true });
-    document.querySelectorAll('.cart-count').forEach(badge => {
-      badge.classList.remove('hk-badge-pop'); void badge.offsetWidth;
-      badge.classList.add('hk-badge-pop');
-      badge.addEventListener('animationend', () => badge.classList.remove('hk-badge-pop'), { once: true });
-    });
-  }
-  requestAnimationFrame(step);
-}
-
 // ── CART ──────────────────────────────────────────────────────────────
 const Cart = {
   items: JSON.parse(localStorage.getItem('hk_cart') || '[]'),
   save() { localStorage.setItem('hk_cart', JSON.stringify(this.items)); },
-  add(item, originEl) {
+  add(item) {
     const ex = this.items.find(i => i.id === item.id);
     if (ex) ex.qty++; else this.items.push({ ...item, qty: 1 });
     this.save(); this.render(); Cart.badge();
     showToast(`${item.name} added to cart`, 'success');
-    if (originEl && item.img) flyToCart(item.img, originEl);
   },
   remove(id) {
     this.items = this.items.filter(i => i.id !== id);
@@ -315,10 +238,7 @@ function showToast(msg, type='success') {
 }
 
 // ── NAV ──────────────────────────────────────────────────────────────
-let _navInitDone = false;
 function initNav() {
-  if (_navInitDone) return;
-  _navInitDone = true;
   const nav = document.querySelector('.nav');
   if (!nav) return;
 
@@ -350,51 +270,40 @@ function initNav() {
   function closeCart() { cartOverlay?.classList.remove('open'); cartDrawer?.classList.remove('open'); }
 
   // ── Mobile drawer ──
-  // Look up at click-time so write-order of mobileDrawerHTML() doesn't matter
-  function getMobEls() {
-    return {
-      overlay:  document.getElementById('mob-drawer-overlay'),
-      drawer:   document.getElementById('mob-drawer'),
-      burger:   document.getElementById('hamburger'),
-    };
-  }
+  const mobOverlay = document.getElementById('mob-drawer-overlay');
+  const mobDrawer  = document.getElementById('mob-drawer');
+  const hamburger  = document.getElementById('hamburger');
 
   function openMobDrawer() {
-    const { overlay, drawer, burger } = getMobEls();
-    overlay?.classList.add('open');
-    drawer?.classList.add('open');
+    mobOverlay?.classList.add('open');
+    mobDrawer?.classList.add('open');
     document.body.style.overflow = 'hidden';
-    if (burger) {
-      const bars = burger.querySelectorAll('span');
+    // animate hamburger → X
+    if (hamburger) {
+      const bars = hamburger.querySelectorAll('span');
       bars[0].style.transform = 'translateY(7px) rotate(45deg)';
       bars[1].style.opacity   = '0';
       bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
     }
   }
   function closeMobDrawer() {
-    const { overlay, drawer, burger } = getMobEls();
-    overlay?.classList.remove('open');
-    drawer?.classList.remove('open');
+    mobOverlay?.classList.remove('open');
+    mobDrawer?.classList.remove('open');
     document.body.style.overflow = '';
-    if (burger) {
-      burger.querySelectorAll('span').forEach(b => { b.style.transform = ''; b.style.opacity = ''; });
+    if (hamburger) {
+      hamburger.querySelectorAll('span').forEach(b => { b.style.transform = ''; b.style.opacity = ''; });
     }
   }
 
-  // Delegate hamburger click on document so it works regardless of injection order
-  document.addEventListener('click', function _hamClick(e) {
-    const burger = e.target.closest('#hamburger');
-    if (!burger) return;
-    const drawer = document.getElementById('mob-drawer');
-    if (drawer?.classList.contains('open')) closeMobDrawer();
+  hamburger?.addEventListener('click', () => {
+    if (mobDrawer?.classList.contains('open')) closeMobDrawer();
     else openMobDrawer();
   });
-
-  document.getElementById('mob-drawer-overlay')?.addEventListener('click', closeMobDrawer);
+  mobOverlay?.addEventListener('click', closeMobDrawer);
   document.getElementById('mob-drawer-close')?.addEventListener('click', closeMobDrawer);
 
   // Close drawer when any nav link is tapped
-  document.getElementById('mob-drawer')?.querySelectorAll('.mob-drawer-link, .mob-drawer-sub-link, .mob-drawer-logo, .mob-drawer-cta a').forEach(a => {
+  mobDrawer?.querySelectorAll('.mob-drawer-link, .mob-drawer-sub-link, .mob-drawer-logo, .mob-drawer-cta a').forEach(a => {
     a.addEventListener('click', closeMobDrawer);
   });
 
@@ -416,7 +325,7 @@ function initNav() {
   });
 
   // Highlight active link in drawer
-  document.getElementById('mob-drawer')?.querySelectorAll('.mob-drawer-link, .mob-drawer-sub-link').forEach(a => {
+  mobDrawer?.querySelectorAll('.mob-drawer-link, .mob-drawer-sub-link').forEach(a => {
     const href = a.getAttribute('href') || '';
     if (href.endsWith(current) || (current === 'index.html' && href.endsWith('index.html'))) {
       a.classList.add('active');
@@ -428,32 +337,12 @@ function initNav() {
 
 // ── SCROLL REVEAL ──────────────────────────────────────────────────────
 function initReveal() {
-  const SELECTOR = '.reveal, .reveal-left, .reveal-right';
-
+  const els = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+  if (!els.length) return;
   const io = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
-    });
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
   }, { threshold: 0.12 });
-
-  // Observe all elements currently in the DOM
-  function observeAll() {
-    document.querySelectorAll(SELECTOR).forEach(el => {
-      if (!el.dataset.revealObserved) {
-        el.dataset.revealObserved = '1';
-        io.observe(el);
-      }
-    });
-  }
-
-  observeAll();
-
-  // Also watch for dynamically injected reveal elements (e.g. cat cards rendered after load)
-  const mo = new MutationObserver(() => observeAll());
-  mo.observe(document.body, { childList: true, subtree: true });
+  els.forEach(el => io.observe(el));
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────
@@ -492,7 +381,7 @@ function catCardHTML(cat, pages) {
         ${cat.microchipped ? '<span class="badge badge-amber"><i class="fa-solid fa-microchip"></i> Microchipped</span>' : ''}
       </div>
       <button class="btn btn-primary" style="width:100%; justify-content:center"
-        onclick="event.stopPropagation(); Cart.add(${JSON.stringify(cat).replace(/"/g,'&quot;')}, this)">
+        onclick="event.stopPropagation(); Cart.add(${JSON.stringify(cat).replace(/"/g,'&quot;')})">
         <i class="fa-solid fa-bag-shopping"></i> Add to Cart
       </button>
     </div>
@@ -757,7 +646,7 @@ function footerHTML(prefix='') {
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────
-function _init() {
+document.addEventListener('DOMContentLoaded', () => {
   initNav();
   initReveal();
   // newsletter
@@ -772,11 +661,4 @@ function _init() {
       }
     });
   });
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', _init);
-} else {
-  // DOM already parsed (script is at bottom of <body>)
-  _init();
-}
+});
