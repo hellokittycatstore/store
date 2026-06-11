@@ -6,6 +6,8 @@
   <title>Sign In — HelloKitty</title>
   <link rel="stylesheet" href="../css/global.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="../js/countries-states.js"></script>
+  
   <!-- Smartsupp Live Chat script -->
 <script type="text/javascript">
 var _smartsupp = _smartsupp || {};
@@ -137,7 +139,7 @@ window.smartsupp||(function(d) {
     <div class="auth-visual-content">
       <div class="auth-stars">★★★★★</div>
       <div class="auth-quote">"Duchess arrived healthy, <em>happy,</em> and exactly as described. HelloKitty is the real deal."</div>
-      <div class="auth-cite">— Amaka O., Lagos · Persian owner since 2023</div>
+      <div class="auth-cite">— Pamela O., Netherlands · Persian owner since 2023</div>
     </div>
   </div>
 
@@ -210,6 +212,20 @@ window.smartsupp||(function(d) {
         <label class="form-label">Phone Number</label>
         <input type="tel" class="form-input" placeholder="+1(503) 000-000" id="reg-phone">
       </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Country</label>
+          <select class="form-input" id="reg-country" style="cursor:pointer;background:#fff url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path fill=%22%23888%22 d=%22M6 8L1 3h10z%22/></svg>') no-repeat right 14px center;appearance:none;-webkit-appearance:none;padding-right:36px;">
+            <option value="">Select country…</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">State / Region</label>
+          <select class="form-input" id="reg-state" disabled style="cursor:pointer;background:#fff url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22><path fill=%22%23888%22 d=%22M6 8L1 3h10z%22/></svg>') no-repeat right 14px center;appearance:none;-webkit-appearance:none;padding-right:36px;opacity:0.55;transition:opacity 0.2s;">
+            <option value="">Select state…</option>
+          </select>
+        </div>
+      </div>
       <div class="form-group">
         <label class="form-label">Password</label>
         <div class="password-wrap">
@@ -277,6 +293,45 @@ window.smartsupp||(function(d) {
   window.addEventListener('scroll', () => {
     document.getElementById('main-nav')?.classList.toggle('scrolled', window.scrollY > 10);
   });
+
+  /* ── COUNTRY / STATE DROPDOWNS ── */
+  (function () {
+    const countryEl = document.getElementById('reg-country');
+    const stateEl   = document.getElementById('reg-state');
+    if (!countryEl || typeof CountriesStates === 'undefined') return;
+
+    // Populate countries
+    CountriesStates.getCountryList().forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.code; opt.textContent = c.name;
+      countryEl.appendChild(opt);
+    });
+
+    // Pre-select Nigeria since site targets Lagos users
+    countryEl.value = 'US';
+    loadStates('US');
+
+    countryEl.addEventListener('change', () => loadStates(countryEl.value));
+
+    function loadStates(code) {
+      stateEl.innerHTML = '<option value="">Select state…</option>';
+      if (!code) { stateEl.disabled = true; stateEl.style.opacity = '0.55'; return; }
+      const states = CountriesStates.getStates(code);
+      if (states.length === 0) {
+        stateEl.innerHTML = '<option value="">No regions listed</option>';
+        stateEl.disabled = true; stateEl.style.opacity = '0.55'; return;
+      }
+      states.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.code; opt.textContent = s.name;
+        stateEl.appendChild(opt);
+      });
+      stateEl.disabled = false; stateEl.style.opacity = '1';
+    }
+  })();
 </script>
+
+<script src="../js/hk-chat-bubble.js"></script>
+
 </body>
 </html>
