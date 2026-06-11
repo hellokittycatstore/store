@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careers — HelloKitty</title>
+  <meta name="description" content="Join the HelloKitty team. We're a passionate group of vets, engineers, and cat-obsessed humans building the world's most trusted pedigree cat platform.">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '2b407ddcce92a71422bc1de977094c68725b8ef0';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+  </script>
+  <style>
+    /* ── VALUES BAND ── */
+    .values-band { background: var(--brown-deep); padding: 80px 0; }
+    .values-band-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .value-item { padding: 0 40px; border-right: 1px solid rgba(255,255,255,0.08); text-align: center; }
+    .value-item:last-child { border-right: none; }
+    .value-icon { font-size: 34px; color: var(--amber); margin-bottom: 16px; }
+    .value-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .value-desc { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; }
+
+    /* ── PERKS ── */
+    .perks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .perk-card {
+      background: var(--warm-white); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 32px 28px;
+      display: flex; align-items: flex-start; gap: 18px;
+      transition: var(--transition);
+    }
+    .perk-card:hover { box-shadow: var(--shadow-sm); border-color: var(--amber); transform: translateY(-3px); }
+    .perk-icon { width: 52px; height: 52px; flex-shrink: 0; background: var(--amber-pale); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 22px; color: var(--amber); transition: var(--transition); }
+    .perk-card:hover .perk-icon { background: var(--amber); color: #fff; }
+    .perk-title { font-weight: 700; color: var(--brown-deep); font-size: 15px; margin-bottom: 6px; }
+
+    /* ── JOB LISTINGS ── */
+    .jobs-list { display: flex; flex-direction: column; gap: 0; }
+    .job-item {
+      background: var(--warm-white); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 32px 36px;
+      margin-bottom: 16px; transition: var(--transition);
+      display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
+    }
+    .job-item:hover { box-shadow: var(--shadow-md); border-color: var(--amber); transform: translateY(-3px); }
+    .job-dept {
+      font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 8px;
+    }
+    .job-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700; color: var(--brown-deep); margin-bottom: 10px; }
+    .job-meta { display: flex; flex-wrap: wrap; gap: 16px; }
+    .job-tag {
+      font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 20px;
+      background: var(--cream); border: 1px solid var(--border); color: var(--text-mid);
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── PROCESS ── */
+    .hiring-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+    .h-step {
+      text-align: center; padding: 36px 20px;
+      background: var(--warm-white); border-radius: var(--radius-lg); border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+    .h-step:hover { box-shadow: var(--shadow-sm); transform: translateY(-4px); }
+    .h-step-num {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--amber); color: #fff;
+      font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; box-shadow: 0 6px 20px rgba(196,122,53,0.35);
+    }
+    .h-step-title { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 700; color: var(--brown-deep); margin-bottom: 10px; }
+
+    /* ── TEAM QUOTE ── */
+    .quote-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+    .quote-card {
+      background: var(--warm-white); border-radius: var(--radius-lg);
+      border: 1px solid var(--border); padding: 36px 32px;
+      position: relative;
+    }
+    .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 80px; font-weight: 700; color: var(--amber); opacity: 0.15; line-height: 0.8; margin-bottom: -10px; }
+    .quote-text { font-size: 15px; color: var(--text-mid); line-height: 1.8; font-style: italic; margin-bottom: 20px; }
+    .quote-author { display: flex; align-items: center; gap: 12px; }
+    .quote-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--amber-pale); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--amber); flex-shrink: 0; }
+    .quote-name { font-weight: 700; color: var(--brown-deep); font-size: 14px; }
+    .quote-role { font-size: 12px; color: var(--text-muted); }
+
+    @media (max-width: 1024px) {
+      .values-band-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+      .value-item { border-right: none; padding: 0; }
+      .perks-grid { grid-template-columns: repeat(2, 1fr); }
+      .hiring-steps { grid-template-columns: repeat(2, 1fr); }
+      .quote-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .perks-grid { grid-template-columns: 1fr; }
+      .job-item { grid-template-columns: 1fr; }
+      .hiring-steps { grid-template-columns: 1fr; }
+      .values-band-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<script src="../js/main.js"></script>
+<script>document.write(navHTML('../'));</script>
+<script>document.write(cartDrawerHTML());</script>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span><i class="fa-solid fa-chevron-right" style="font-size:9px"></i></span>
+      <span class="current">Careers</span>
+    </nav>
+    <div class="label-chip"><i class="fa-solid fa-briefcase"></i> Join Us</div>
+    <h1 class="page-hero-title">Work for the Love <em style="font-style:italic;color:var(--amber)">of Cats</em></h1>
+    <p class="page-hero-sub">We're building the world's most trusted pedigree cat platform — and we're looking for people who care as deeply as we do.</p>
+  </div>
+</section>
+
+<!-- VALUES BAND -->
+<div class="values-band">
+  <div class="container">
+    <div class="values-band-grid">
+      <div class="value-item reveal">
+        <div class="value-icon"><i class="fa-solid fa-paw"></i></div>
+        <div class="value-title">Animal-First Always</div>
+        <p class="value-desc">Every decision we make — from product features to hiring — is filtered through one question: is this good for the cats?</p>
+      </div>
+      <div class="value-item reveal reveal-delay-1">
+        <div class="value-icon"><i class="fa-solid fa-flask"></i></div>
+        <div class="value-title">Move With Intention</div>
+        <p class="value-desc">We're fast, but never reckless. Especially in a business where the product is a living thing, thoughtfulness is a competitive advantage.</p>
+      </div>
+      <div class="value-item reveal reveal-delay-2">
+        <div class="value-icon"><i class="fa-solid fa-comments"></i></div>
+        <div class="value-title">Radical Transparency</div>
+        <p class="value-desc">We share information openly — with buyers, breeders, and each other. No hidden fees. No buried disclaimers. No office politics.</p>
+      </div>
+      <div class="value-item reveal reveal-delay-3">
+        <div class="value-icon"><i class="fa-solid fa-seedling"></i></div>
+        <div class="value-title">Grow Together</div>
+        <p class="value-desc">We're a small team. Your work is visible, your ideas are heard, and your growth is tied directly to the company's. That's intentional.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PERKS -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center; max-width:560px; margin:0 auto 56px;" class="reveal">
+      <div class="label-chip"><i class="fa-solid fa-gift"></i> Benefits</div>
+      <h2>Why People Love Working Here</h2>
+      <p>Beyond a competitive salary, here's what joining HelloKitty actually looks like day-to-day.</p>
+    </div>
+    <div class="perks-grid">
+      <div class="perk-card reveal">
+        <div class="perk-icon"><i class="fa-solid fa-house-laptop"></i></div>
+        <div>
+          <div class="perk-title">Remote-First, Always</div>
+          <p style="font-size:13px;color:var(--text-mid)">Work from anywhere. Our team spans Portland, Lagos, London, and beyond. We have no mandatory office days — ever.</p>
+        </div>
+      </div>
+      <div class="perk-card reveal reveal-delay-1">
+        <div class="perk-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+        <div>
+          <div class="perk-title">Full Health Coverage</div>
+          <p style="font-size:13px;color:var(--text-mid)">100% employer-paid medical, dental, and vision for you and your dependents. Includes mental health and telehealth.</p>
+        </div>
+      </div>
+      <div class="perk-card reveal reveal-delay-2">
+        <div class="perk-icon"><i class="fa-solid fa-cat"></i></div>
+        <div>
+          <div class="perk-title">Team Member Kitten Discount</div>
+          <p style="font-size:13px;color:var(--text-mid)">Every HelloKitty employee gets 25% off any kitten from our network, plus lifetime vet hotline access for their own cats.</p>
+        </div>
+      </div>
+      <div class="perk-card reveal">
+        <div class="perk-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div>
+          <div class="perk-title">$2,000 Learning Budget</div>
+          <p style="font-size:13px;color:var(--text-mid)">An annual allowance for courses, conferences, certifications, or books. No approval needed for anything under $200.</p>
+        </div>
+      </div>
+      <div class="perk-card reveal reveal-delay-1">
+        <div class="perk-icon"><i class="fa-solid fa-umbrella-beach"></i></div>
+        <div>
+          <div class="perk-title">Unlimited PTO (Real)</div>
+          <p style="font-size:13px;color:var(--text-mid)">We track output, not hours. Minimum 20 days encouraged. Leadership models this — no guilt culture.</p>
+        </div>
+      </div>
+      <div class="perk-card reveal reveal-delay-2">
+        <div class="perk-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <div>
+          <div class="perk-title">Equity for Everyone</div>
+          <p style="font-size:13px;color:var(--text-mid)">All full-time employees receive stock options from day one. We're building this together and that should mean something.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN ROLES -->
+<section class="section" style="background:var(--cream)">
+  <div class="container">
+    <div style="text-align:center; max-width:560px; margin:0 auto 56px;" class="reveal">
+      <div class="label-chip"><i class="fa-solid fa-briefcase"></i> Open Roles</div>
+      <h2>Current Openings</h2>
+      <p>We hire slowly and carefully. Every role on this page is one we're genuinely ready to fill with the right person.</p>
+    </div>
+
+    <div class="jobs-list">
+
+      <div class="job-item reveal">
+        <div>
+          <div class="job-dept">Veterinary</div>
+          <div class="job-title">Associate Veterinarian — Vet Hotline</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-globe"></i> Remote — Worldwide</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-stethoscope"></i> DVM Required</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="showToast('Opening your application form…','info')">
+          Apply Now <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="job-item reveal">
+        <div>
+          <div class="job-dept">Engineering</div>
+          <div class="job-title">Senior Full-Stack Engineer</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-globe"></i> Remote — US / EU</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-code"></i> React · Node · PostgreSQL</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="showToast('Opening your application form…','info')">
+          Apply Now <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="job-item reveal">
+        <div>
+          <div class="job-dept">Customer Experience</div>
+          <div class="job-title">Kitten Placement Advisor</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-globe"></i> Remote — Worldwide</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-cat"></i> Cat Experience Preferred</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="showToast('Opening your application form…','info')">
+          Apply Now <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="job-item reveal">
+        <div>
+          <div class="job-dept">Marketing</div>
+          <div class="job-title">Content & Social Media Manager</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-globe"></i> Remote — Worldwide</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-camera"></i> Photography / Video Bonus</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="showToast('Opening your application form…','info')">
+          Apply Now <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="job-item reveal">
+        <div>
+          <div class="job-dept">Operations</div>
+          <div class="job-title">Breeder Relations Coordinator</div>
+          <div class="job-meta">
+            <span class="job-tag"><i class="fa-solid fa-globe"></i> Remote — US Preferred</span>
+            <span class="job-tag"><i class="fa-solid fa-clock"></i> Full-Time</span>
+            <span class="job-tag"><i class="fa-solid fa-handshake"></i> Account Management Exp.</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="showToast('Opening your application form…','info')">
+          Apply Now <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:40px;" class="reveal">
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px">Don't see your role? We hire for character and care as much as credentials.</p>
+      <button class="btn btn-outline btn-lg" onclick="showToast('General application noted! We\'ll keep you in mind. 🐾','success')">Send a General Application</button>
+    </div>
+  </div>
+</section>
+
+<!-- HIRING PROCESS -->
+<section class="section">
+  <div class="container">
+    <div style="text-align:center; max-width:560px; margin:0 auto 56px;" class="reveal">
+      <div class="label-chip"><i class="fa-solid fa-route"></i> Our Process</div>
+      <h2>How We Hire</h2>
+      <p>We respect your time. Our process is four steps, takes under three weeks, and will never include a surprise task you weren't told about in advance.</p>
+    </div>
+    <div class="hiring-steps">
+      <div class="h-step reveal">
+        <div class="h-step-num">1</div>
+        <div class="h-step-title">Application Review</div>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.7">Every application is read by a human — not filtered by keyword. You'll hear back within 5 business days, either way.</p>
+      </div>
+      <div class="h-step reveal reveal-delay-1">
+        <div class="h-step-num">2</div>
+        <div class="h-step-title">Intro Call</div>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.7">30 minutes with our hiring lead. We want to understand who you are, what you care about, and whether HelloKitty is actually a good fit for you — not just the reverse.</p>
+      </div>
+      <div class="h-step reveal reveal-delay-2">
+        <div class="h-step-num">3</div>
+        <div class="h-step-title">Skill Assessment</div>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.7">A short, paid task relevant to the role — maximum 2 hours. We pay $75 for every completed assessment, regardless of outcome.</p>
+      </div>
+      <div class="h-step reveal reveal-delay-3">
+        <div class="h-step-num">4</div>
+        <div class="h-step-title">Team Interview & Offer</div>
+        <p style="font-size:13px;color:var(--text-mid);line-height:1.7">Meet two or three team members in a single 60-minute conversation. If it's a match, we move to offer within 48 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM QUOTES -->
+<section class="section" style="background:var(--cream)">
+  <div class="container">
+    <div style="text-align:center; max-width:560px; margin:0 auto 56px;" class="reveal">
+      <div class="label-chip"><i class="fa-solid fa-users"></i> From the Team</div>
+      <h2>What Our People Say</h2>
+    </div>
+    <div class="quote-grid">
+      <div class="quote-card reveal">
+        <div class="quote-mark">"</div>
+        <p class="quote-text">I've worked at three pet-tech startups. HelloKitty is the only one where the mission never felt like marketing copy. The animal welfare standard is genuinely non-negotiable here.</p>
+        <div class="quote-author">
+          <div class="quote-avatar"><i class="fa-solid fa-stethoscope"></i></div>
+          <div>
+            <div class="quote-name">Dr. Kevin Tangeman</div>
+            <div class="quote-role">Lead Veterinarian</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal reveal-delay-1">
+        <div class="quote-mark">"</div>
+        <p class="quote-text">The engineering team here moves fast but never skips the conversation. Friesen built a culture where you can push back on a bad idea in a Slack message and nobody takes it personally.</p>
+        <div class="quote-author">
+          <div class="quote-avatar"><i class="fa-solid fa-code"></i></div>
+          <div>
+            <div class="quote-name">Priya N.</div>
+            <div class="quote-role">Senior Engineer, joined 2023</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card reveal reveal-delay-2">
+        <div class="quote-mark">"</div>
+        <p class="quote-text">My daughter grew up wanting a kitten her whole life. When I joined HelloKitty and got my team discount, she finally got Duchess — the Persian. Watching her with that cat is everything.</p>
+        <div class="quote-author">
+          <div class="quote-avatar"><i class="fa-solid fa-headset"></i></div>
+          <div>
+            <div class="quote-name">Amara K.</div>
+            <div class="quote-role">Kitten Placement Advisor, joined 2024</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-sm">
+  <div class="container" style="text-align:center;">
+    <div class="reveal">
+      <h3 style="margin-bottom:12px">Ready to Do Work That Matters?</h3>
+      <p style="max-width:480px;margin:0 auto 28px">Browse our open roles or send a general application. We'd love to meet you.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="contact.html" class="btn btn-primary btn-lg">Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="about.html" class="btn btn-outline btn-lg">Meet the Team</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>document.write(footerHTML('../'));</script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    initNav(); initReveal(); Cart.badge();
+    window.addEventListener('scroll', () => {
+      document.getElementById('main-nav')?.classList.toggle('scrolled', window.scrollY > 10);
+    });
+  });
+</script>
+</body>
+</html>

@@ -440,9 +440,9 @@ function footerHTML(prefix='') {
         <ul class="footer-links">
             <li><a href="${prefix}pages/about.html">About Us</a></li>
             <li><a href="${prefix}pages/contact.html">Contact</a></li>
-            <li><a href="#">Breeder Partners</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Press</a></li>
+          <li><a href="${prefix}pages/breeder-partners.html">Breeder Partners</a></li>
+          <li><a href="${prefix}pages/careers.html">Careers</a></li>
+          <li><a href="${prefix}pages/press.html">Press</a></li>
         </ul>
       </div>
       <div>
@@ -458,7 +458,7 @@ function footerHTML(prefix='') {
           <li><a href="${prefix}pages/shipping.html">Shipping Info</a></li>
           <li><a href="${prefix}pages/health-guarantee.html">Health Guarantee</a></li>
           <li><a href="${prefix}pages/returns.html">Returns</a></li>
-          <li><a href="#">Privacy Policy</a></li>          
+          <li><a href="${prefix}pages/privacy-policy.html">Privacy Policy</a></li>          
         </ul>
       </div>
     </div>
