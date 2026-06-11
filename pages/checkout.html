@@ -211,19 +211,22 @@ window.smartsupp||(function(d) {
           <div class="section-heading"><i class="fa-solid fa-truck-fast"></i> Delivery Address</div>
           <div class="form-group"><label class="form-label">Street Address</label><input type="text" class="form-input" id="addr" placeholder="12 Admiralty Way"></div>
           <div class="form-row">
-            <div class="form-group"><label class="form-label">City</label><input type="text" class="form-input" id="city" placeholder="e.g. San Francisco"></div>
-            <div class="form-group"><label class="form-label">State</label><select class="form-select" id="state">
-              <option value="">Select State…</option>
-              <option>Abia</option><option>Abuja (FCT)</option><option>Adamawa</option><option>Akwa Ibom</option>
-              <option>Anambra</option><option>Bauchi</option><option>Bayelsa</option><option>Benue</option>
-              <option>Borno</option><option>Cross River</option><option>Delta</option><option>Ebonyi</option>
-              <option>Edo</option><option>Ekiti</option><option>Enugu</option><option>Gombe</option>
-              <option>Imo</option><option>Jigawa</option><option>Kaduna</option><option>Kano</option>
-              <option>Katsina</option><option>Kebbi</option><option>Kogi</option><option>Kwara</option>
-              <option selected>Lagos</option><option>Nasarawa</option><option>Niger</option><option>Ogun</option>
-              <option>Ondo</option><option>Osun</option><option>Oyo</option><option>Plateau</option>
-              <option>Rivers</option><option>Sokoto</option><option>Taraba</option><option>Yobe</option><option>Zamfara</option>
-            </select></div>
+            <div class="form-group"><label class="form-label">City</label><input type="text" class="form-input" id="city" placeholder="e.g. Lagos"></div>
+            <div class="form-group">
+              <label class="form-label">Country</label>
+              <select class="form-select" id="country">
+                <option value="">Select Country…</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">State / Province</label>
+              <select class="form-select" id="state" disabled>
+                <option value="">Select country first…</option>
+              </select>
+            </div>
+            <div class="form-group"><label class="form-label">ZIP / Postal Code</label><input type="text" class="form-input" id="zip" placeholder="e.g. 100001"></div>
           </div>
           <div class="form-group"><label class="form-label">Delivery Notes (optional)</label><textarea class="form-textarea" id="notes" placeholder="Gate code, landmark, delivery instructions…" style="min-height:80px"></textarea></div>
 
@@ -285,14 +288,76 @@ window.smartsupp||(function(d) {
               <p style="margin-top:8px;color:var(--text-muted)">Use your order number as payment reference. Orders are confirmed within 1 business hour.</p>
             </div>
 
-            <label class="payment-option" id="pay-flutter-opt">
-              <input type="radio" name="payment" value="flutterwave">
-              <div>
-                <div class="payment-label">Flutterwave</div>
-                <div class="payment-sub">Pay securely with Flutterwave</div>
+            <label class="payment-option" id="pay-paypal-opt">
+              <input type="radio" name="payment" value="paypal">
+              <div class="responsive-wrap">
+                <div>
+                  <div class="payment-label">PayPal</div>
+                  <div class="payment-sub">Pay via your PayPal account or guest checkout</div>
+                </div>
+                <div class="payment-icons">
+                  <span class="card-icon" style="color:#003087;border-color:#003087;font-weight:800">Pay</span><span class="card-icon" style="color:#009cde;border-color:#009cde;font-weight:800">Pal</span>
+                </div>
               </div>
-              <div class="payment-icons"><span class="card-icon" style="color:#F5A623;border-color:#F5A623">FW</span></div>
             </label>
+            <div id="paypal-details" style="display:none;background:var(--cream);border-radius:var(--radius-sm);padding:16px 20px;border:1px solid var(--border);font-size:13px;">
+              <p style="font-weight:700;margin-bottom:6px;color:var(--brown-deep)">PayPal Checkout</p>
+              <p style="color:var(--text-muted);margin-bottom:10px">You will be redirected to PayPal to complete your payment securely. No PayPal account? Use the guest checkout option on PayPal.</p>
+              <div class="form-group" style="margin-bottom:0"><label class="form-label">PayPal Email (optional)</label><input type="email" class="form-input" id="paypal-email" placeholder="your@paypal.com"></div>
+            </div>
+
+            <label class="payment-option" id="pay-giftcard-opt">
+              <input type="radio" name="payment" value="giftcard">
+              <div class="responsive-wrap">
+                <div>
+                  <div class="payment-label">Gift Card</div>
+                  <div class="payment-sub">Redeem a HelloKitty gift card</div>
+                </div>
+                <div class="payment-icons">
+                  <span class="card-icon" style="color:#276749;border-color:#276749"><i class="fa-solid fa-gift" style="font-size:12px"></i></span>
+                </div>
+              </div>
+            </label>
+            <div id="giftcard-details" style="display:none;background:var(--cream);border-radius:var(--radius-sm);padding:16px 20px;border:1px solid var(--border);font-size:13px;">
+              <p style="font-weight:700;margin-bottom:6px;color:var(--brown-deep)">Redeem Gift Card</p>
+              <p style="color:var(--text-muted);margin-bottom:10px">Enter your 16-digit gift card code below. Balance will be applied to your order total.</p>
+              <div class="form-group" style="margin-bottom:0"><label class="form-label">Gift Card Code</label><input type="text" class="form-input" id="giftcard-code" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19"></div>
+            </div>
+
+            <label class="payment-option" id="pay-crypto-opt">
+              <input type="radio" name="payment" value="crypto">
+              <div class="responsive-wrap">
+                <div>
+                  <div class="payment-label">Cryptocurrency</div>
+                  <div class="payment-sub">Bitcoin, Ethereum, USDT, and more</div>
+                </div>
+                <div class="payment-icons">
+                  <span class="card-icon" style="color:#F7931A;border-color:#F7931A;font-size:12px"><i class="fa-brands fa-bitcoin"></i></span>
+                  <span class="card-icon" style="color:#627EEA;border-color:#627EEA;font-size:12px"><i class="fa-brands fa-ethereum"></i></span>
+                </div>
+              </div>
+            </label>
+            <div id="crypto-details" style="display:none;background:var(--cream);border-radius:var(--radius-sm);padding:16px 20px;border:1px solid var(--border);font-size:13px;">
+              <p style="font-weight:700;margin-bottom:10px;color:var(--brown-deep)">Pay with Crypto</p>
+              <div class="form-group" style="margin-bottom:12px">
+                <label class="form-label">Select Coin</label>
+                <select class="form-select" id="crypto-coin">
+                  <option value="">Choose currency…</option>
+                  <option value="btc">Bitcoin (BTC)</option>
+                  <option value="eth">Ethereum (ETH)</option>
+                  <option value="usdt">Tether (USDT – TRC20)</option>
+                  <option value="usdc">USD Coin (USDC)</option>
+                  <option value="bnb">BNB (BEP20)</option>
+                </select>
+              </div>
+              <div id="crypto-address-wrap" style="display:none;">
+                <p style="color:var(--text-muted);margin-bottom:8px;font-size:12px">Send the exact order total to the wallet address below. Your order is confirmed once payment is detected on-chain.</p>
+                <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 14px;font-family:monospace;font-size:12px;word-break:break-all;color:var(--brown-deep);display:flex;justify-content:space-between;align-items:center;gap:10px;">
+                  <span id="crypto-wallet-addr">—</span>
+                  <button type="button" onclick="navigator.clipboard.writeText(document.getElementById('crypto-wallet-addr').textContent);showToast('Address copied!','success')" style="background:none;border:none;cursor:pointer;color:var(--amber);font-size:13px;flex-shrink:0"><i class="fa-regular fa-copy"></i></button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -352,6 +417,7 @@ window.smartsupp||(function(d) {
   </div>
 </section>
 
+<script src="../js/countries-states.js"></script>
 <script>document.write(footerHTML('../'));</script>
 
 <script>
@@ -399,13 +465,55 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Payment method toggle
+  const paymentPanels = {
+    card:     () => document.getElementById('card-fields').classList.add('show'),
+    transfer: () => document.getElementById('transfer-details').style.display = 'block',
+    paypal:   () => document.getElementById('paypal-details').style.display = 'block',
+    giftcard: () => document.getElementById('giftcard-details').style.display = 'block',
+    crypto:   () => document.getElementById('crypto-details').style.display = 'block',
+  };
+
+  function closeAllPaymentPanels() {
+    document.getElementById('card-fields').classList.remove('show');
+    document.getElementById('transfer-details').style.display = 'none';
+    document.getElementById('paypal-details').style.display = 'none';
+    document.getElementById('giftcard-details').style.display = 'none';
+    document.getElementById('crypto-details').style.display = 'none';
+  }
+
   document.querySelectorAll('input[name="payment"]').forEach(radio => {
     radio.addEventListener('change', () => {
       document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
       radio.closest('.payment-option').classList.add('selected');
-      document.getElementById('card-fields').classList.toggle('show', radio.value === 'card');
-      document.getElementById('transfer-details').style.display = radio.value === 'transfer' ? 'block' : 'none';
+      closeAllPaymentPanels();
+      paymentPanels[radio.value]?.();
     });
+  });
+
+  // Gift card code formatter (XXXX-XXXX-XXXX-XXXX)
+  document.getElementById('giftcard-code')?.addEventListener('input', e => {
+    let val = e.target.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase().substring(0, 16);
+    val = val.match(/.{1,4}/g)?.join('-') || val;
+    e.target.value = val;
+  });
+
+  // Crypto coin selector — show wallet address
+  const cryptoWallets = {
+    btc:  '1A1zP1eP5QGefi2DMPTfTL5SLmv7Divf8N',
+    eth:  '0x742d35Cc6634C0532925a3b8D4C9B7A1c2e3f4d',
+    usdt: 'TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE',
+    usdc: '0x742d35Cc6634C0532925a3b8D4C9B7A1c2e3f4d',
+    bnb:  'bnb1grpf0955h0ykzq3ar5nmum7y6gdfl6lx8xu7hm',
+  };
+  document.getElementById('crypto-coin')?.addEventListener('change', e => {
+    const wrap = document.getElementById('crypto-address-wrap');
+    const addr = document.getElementById('crypto-wallet-addr');
+    if (cryptoWallets[e.target.value]) {
+      addr.textContent = cryptoWallets[e.target.value];
+      wrap.style.display = 'block';
+    } else {
+      wrap.style.display = 'none';
+    }
   });
 
   // Format card number
@@ -429,18 +537,68 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ── COUNTRY / STATE DROPDOWNS ──────────────────────────────────────
+  const countryEl = document.getElementById('country');
+  const stateEl   = document.getElementById('state');
+
+  // Populate countries
+  CountriesStates.getCountryList().forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c.code;
+    opt.textContent = c.name;
+    countryEl.appendChild(opt);
+  });
+
+  // Pre-select Nigeria (NG) as default since the site is Nigeria-based
+  countryEl.value = 'NG';
+  populateStates('NG');
+
+  countryEl.addEventListener('change', () => {
+    populateStates(countryEl.value);
+  });
+
+  function populateStates(countryCode) {
+    stateEl.innerHTML = '';
+    if (!countryCode) {
+      stateEl.innerHTML = '<option value="">Select country first…</option>';
+      stateEl.disabled = true;
+      return;
+    }
+    const states = CountriesStates.getStates(countryCode);
+    if (!states.length) {
+      stateEl.innerHTML = '<option value="">No states available</option>';
+      stateEl.disabled = true;
+      return;
+    }
+    stateEl.disabled = false;
+    const placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.textContent = 'Select State…';
+    stateEl.appendChild(placeholder);
+    states.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.code;
+      opt.textContent = s.name;
+      stateEl.appendChild(opt);
+    });
+    // Default to Lagos (LA) when Nigeria is selected
+    if (countryCode === 'NG') stateEl.value = 'LA';
+  }
+
   // Place order
   document.getElementById('place-order-btn').addEventListener('click', () => {
     // Validate
-    const fn = document.getElementById('fn').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const addr = document.getElementById('addr').value.trim();
-    const state = document.getElementById('state').value;
+    const fn      = document.getElementById('fn').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const addr    = document.getElementById('addr').value.trim();
+    const country = document.getElementById('country').value;
+    const state   = document.getElementById('state').value;
 
-    if (!fn) { showToast('Please enter your first name.', 'error'); return; }
+    if (!fn)              { showToast('Please enter your first name.', 'error'); return; }
     if (!email.includes('@')) { showToast('Please enter a valid email.', 'error'); return; }
-    if (!addr) { showToast('Please enter your delivery address.', 'error'); return; }
-    if (!state) { showToast('Please select your state.', 'error'); return; }
+    if (!addr)            { showToast('Please enter your delivery address.', 'error'); return; }
+    if (!country)         { showToast('Please select your country.', 'error'); return; }
+    if (!state)           { showToast('Please select your state / province.', 'error'); return; }
     if (!Cart.items.length) { showToast('Your cart is empty.', 'error'); return; }
 
     const ref = '#HK-' + Math.random().toString(36).substring(2,8).toUpperCase();

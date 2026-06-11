@@ -453,6 +453,9 @@ p { font-size: 15px; line-height: 1.8; color: var(--text-mid); }
   border-bottom: 1px solid var(--border);
   background: var(--brown-deep);
   flex-shrink: 0;
+  top: 0;
+  position: sticky;
+  z-index: 100;
 }
 .mob-drawer-logo {
   font-family: 'Cormorant Garamond', serif;
@@ -478,6 +481,7 @@ p { font-size: 15px; line-height: 1.8; color: var(--text-mid); }
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
+
 .mob-drawer-user-avatar {
   width: 42px; height: 42px; border-radius: 50%;
   background: var(--brown-deep);
