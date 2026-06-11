@@ -14,7 +14,7 @@ const CATS = [
   { id:1, name:"Duchess", breed:"Persian", age:"3 months", price:1200, gender:"Female", color:"White",
     tag:"Popular", desc:"An elegant, silky-coated Persian with a sweet temperament. Duchess loves gentle cuddles and indoor luxury.",
     vaccinated:true, microchipped:true,
-    img:"https://images.unsplash.com/photo-1518791841217-8f162f1912da?w=600&q=80" },
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Persialainen.jpg/250px-Persialainen.jpg" },
   { id:2, name:"Onyx", breed:"Maine Coon", age:"4 months", price:1500, gender:"Male", color:"Black",
     tag:"New", desc:"A majestic Maine Coon with tufted ears and a lionlike mane. Onyx is playful, bold, and endlessly curious.",
     vaccinated:true, microchipped:true,
@@ -30,7 +30,7 @@ const CATS = [
   { id:5, name:"Shadow", breed:"British Shorthair", age:"3 months", price:1100, gender:"Male", color:"Grey",
     tag:"", desc:"Dense-coated and dignified, Shadow is independent yet loyal. Perfect for professionals and calm households.",
     vaccinated:false, microchipped:true,
-    img:"https://images.unsplash.com/photo-1516431883659-655d41c09bf9?w=600&q=80" },
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Mystica_from_British_Empire_Cattery.jpg/250px-Mystica_from_British_Empire_Cattery.jpg" },
   { id:6, name:"Mochi", breed:"Ragdoll", age:"6 months", price:1600, gender:"Female", color:"White/Blue",
     tag:"New", desc:"True to its breed, Mochi goes limp with love when held. A docile, fluffy companion with sapphire eyes.",
     vaccinated:true, microchipped:true,
@@ -46,7 +46,7 @@ const CATS = [
 { id:9, name:"Zephyr", breed:"Bengal", age:"5 months", price:1700, gender:"Male", color:"Spotted",
   tag:"Exotic", desc:"A high-energy Bengal with a striking leopard pattern. Zephyr loves climbing and active play.",
   vaccinated:true, microchipped:true,
-  img:"https://images.unsplash.com/photo-1601758123927-1966b6f3c8d3?w=600&q=80" },
+  img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Blue_bengal_kitten_side_%28cropped%29.jpg/960px-Blue_bengal_kitten_side_%28cropped%29.jpg" },
 
 { id:10, name:"Willow", breed:"Birman", age:"4 months", price:1300, gender:"Female", color:"Cream/Seal",
   tag:"Popular", desc:"Gentle and affectionate, Willow has soft fur and signature white gloves. A calm family companion.",
@@ -243,7 +243,7 @@ const Cart = {
     const ex = this.items.find(i => i.id === item.id);
     if (ex) ex.qty++; else this.items.push({ ...item, qty: 1 });
     this.save(); this.render(); Cart.badge();
-    showToast(`${item.name} added to cart`, 'success');
+    showToast(`${item.name} added to cart - View in cart`, 'success');
     if (originEl && item.img) flyToCart(item.img, originEl);
   },
   remove(id) {
