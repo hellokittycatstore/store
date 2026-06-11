@@ -221,6 +221,7 @@ window.smartsupp||(function(d) {
   c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
 })(document);
 </script>
+
 <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
 
 
@@ -255,14 +256,7 @@ window.smartsupp||(function(d) {
     </button>
   </div>
 </nav>
-<div class="mobile-menu" id="mobile-menu">
-  <a href="index.html">Home</a>
-  <a href="pages/shop.html">Our Cats</a>
-  <a href="pages/accessories.html">Accessories</a>
-  <a href="pages/about.html">About</a>
-  <a href="pages/contact.html">Contact</a>
-  <a href="pages/login.html" style="color:var(--amber)">Sign In</a>
-</div>
+
 
 <!-- CART DRAWER -->
 <div class="cart-overlay" id="cart-overlay"></div>
@@ -279,6 +273,108 @@ window.smartsupp||(function(d) {
     </a>
   </div>
 </aside>
+
+
+<div class="mob-drawer-overlay" id="mob-drawer-overlay"></div>
+  <aside class="mob-drawer" id="mob-drawer" aria-label="Navigation menu" role="dialog" aria-modal="true">
+
+    <!-- Header -->
+    <div class="mob-drawer-header">
+      <a href="index.html" class="mob-drawer-logo">
+        <i class="fa-solid fa-paw"></i> HelloKitty
+      </a>
+      <button class="mob-drawer-close" id="mob-drawer-close" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <!-- User strip -->
+    <div class="mob-drawer-user">
+      <div class="mob-drawer-user-avatar"><i class="fa-regular fa-user"></i></div>
+      <div>
+        <div class="mob-drawer-user-name">Welcome back</div>
+        <a href="pages/login.html" class="mob-drawer-user-action">Sign in or create account →</a>
+      </div>
+    </div>
+
+    <!-- Primary nav -->
+    <nav class="mob-drawer-nav">
+      <a href="index.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-solid fa-house"></i></span>
+        Home
+      </a>
+      <a href="pages/shop.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-solid fa-paw"></i></span>
+        Our Cats
+      </a>
+      <a href="pages/accessories.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-solid fa-tag"></i></span>
+        Accessories
+      </a>
+      <a href="pages/wishlist.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-regular fa-heart"></i></span>
+        My Wishlist
+      </a>
+      <a href="pages/checkout.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-solid fa-bag-shopping"></i></span>
+        Cart &amp; Checkout
+      </a>
+    </nav>
+
+    <div class="mob-drawer-divider"></div>
+
+    <!-- Company accordion -->
+    <div class="mob-drawer-group">
+      <button class="mob-drawer-group-toggle" data-target="group-company">
+        <span><i class="fa-solid fa-building" style="margin-right:10px;color:var(--amber)"></i>Company</span>
+        <i class="fa-solid fa-chevron-down mob-drawer-chevron"></i>
+      </button>
+      <div class="mob-drawer-group-body" id="group-company">
+        <a href="pages/about.html" class="mob-drawer-sub-link"><i class="fa-solid fa-circle-info"></i> About Us</a>
+        <a href="pages/breeder-partners.html" class="mob-drawer-sub-link"><i class="fa-solid fa-handshake"></i> Breeder Partners</a>
+        <a href="pages/careers.html" class="mob-drawer-sub-link"><i class="fa-solid fa-briefcase"></i> Careers</a>
+        <a href="pages/press.html" class="mob-drawer-sub-link"><i class="fa-solid fa-newspaper"></i> Press</a>
+      </div>
+    </div>
+
+    <!-- Support accordion -->
+    <div class="mob-drawer-group">
+      <button class="mob-drawer-group-toggle" data-target="group-support">
+        <span><i class="fa-solid fa-headset" style="margin-right:10px;color:var(--amber)"></i>Support</span>
+        <i class="fa-solid fa-chevron-down mob-drawer-chevron"></i>
+      </button>
+      <div class="mob-drawer-group-body" id="group-support">
+        <a href="pages/faq.html" class="mob-drawer-sub-link"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+        <a href="pages/contact.html" class="mob-drawer-sub-link"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+        <a href="pages/shipping.html" class="mob-drawer-sub-link"><i class="fa-solid fa-truck"></i> Shipping Info</a>
+        <a href="pages/health-guarantee.html" class="mob-drawer-sub-link"><i class="fa-solid fa-shield-heart"></i> Health Guarantee</a>
+        <a href="pages/returns.html" class="mob-drawer-sub-link"><i class="fa-solid fa-rotate-left"></i> Returns</a>
+        <a href="pages/privacy-policy.html" class="mob-drawer-sub-link"><i class="fa-solid fa-lock"></i> Privacy Policy</a>
+      </div>
+    </div>
+
+    <div class="mob-drawer-divider"></div>
+
+    <!-- CTA -->
+    <div class="mob-drawer-cta">
+      <a href="pages/login.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+        <i class="fa-regular fa-user"></i> Sign In / Register
+      </a>
+    </div>
+
+    <!-- Footer strip -->
+    <div class="mob-drawer-footer">
+      <div class="mob-drawer-socials">
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="#" aria-label="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+      </div>
+      <p class="mob-drawer-footer-copy">© 2026 HelloKitty Worldwide</p>
+    </div>
+  </aside>
+
+
 
 <!-- HERO -->
 <section class="hero" aria-label="Hero banner">
@@ -577,6 +673,8 @@ window.smartsupp||(function(d) {
 </footer>
 
 <script src="js/main.js"></script>
+
+
 <script>
 // ── HERO SLIDESHOW ────────────────────────────────────────────────────
 (function(){

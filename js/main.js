@@ -238,55 +238,113 @@ function showToast(msg, type='success') {
 }
 
 // ── NAV ──────────────────────────────────────────────────────────────
+let _navInitDone = false;
 function initNav() {
+  if (_navInitDone) return;
+  _navInitDone = true;
   const nav = document.querySelector('.nav');
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobile-menu');
   if (!nav) return;
 
+  // ── Scroll shadow ──
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 50);
   }, { passive: true });
 
-  if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-      const bars = hamburger.querySelectorAll('span');
-      if (mobileMenu.classList.contains('open')) {
-        bars[0].style.transform = 'translateY(7px) rotate(45deg)';
-        bars[1].style.opacity = '0';
-        bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
-      } else {
-        bars.forEach(b => { b.style.transform=''; b.style.opacity=''; });
-      }
-    });
-    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-      hamburger.querySelectorAll('span').forEach(b => { b.style.transform=''; b.style.opacity=''; });
-    }));
-  }
-
-  // active link
+  // ── Active link highlight ──
   const current = location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(a => {
+  document.querySelectorAll('.nav-links a').forEach(a => {
     if (a.getAttribute('href') === current || (current === 'index.html' && a.getAttribute('href') === 'index.html')) {
       a.classList.add('active');
     }
   });
 
-  // Cart drawer
-  const overlay = document.getElementById('cart-overlay');
-  const drawer = document.getElementById('cart-drawer');
+  // ── Cart drawer ──
+  const cartOverlay = document.getElementById('cart-overlay');
+  const cartDrawer  = document.getElementById('cart-drawer');
   document.querySelectorAll('[data-cart-open]').forEach(btn => {
     btn.addEventListener('click', () => {
       Cart.render();
-      overlay?.classList.add('open');
-      drawer?.classList.add('open');
+      cartOverlay?.classList.add('open');
+      cartDrawer?.classList.add('open');
     });
   });
-  overlay?.addEventListener('click', closeCart);
+  cartOverlay?.addEventListener('click', closeCart);
   document.getElementById('cart-close')?.addEventListener('click', closeCart);
-  function closeCart() { overlay?.classList.remove('open'); drawer?.classList.remove('open'); }
+  function closeCart() { cartOverlay?.classList.remove('open'); cartDrawer?.classList.remove('open'); }
+
+  // ── Mobile drawer ──
+  // Look up at click-time so write-order of mobileDrawerHTML() doesn't matter
+  function getMobEls() {
+    return {
+      overlay:  document.getElementById('mob-drawer-overlay'),
+      drawer:   document.getElementById('mob-drawer'),
+      burger:   document.getElementById('hamburger'),
+    };
+  }
+
+  function openMobDrawer() {
+    const { overlay, drawer, burger } = getMobEls();
+    overlay?.classList.add('open');
+    drawer?.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (burger) {
+      const bars = burger.querySelectorAll('span');
+      bars[0].style.transform = 'translateY(7px) rotate(45deg)';
+      bars[1].style.opacity   = '0';
+      bars[2].style.transform = 'translateY(-7px) rotate(-45deg)';
+    }
+  }
+  function closeMobDrawer() {
+    const { overlay, drawer, burger } = getMobEls();
+    overlay?.classList.remove('open');
+    drawer?.classList.remove('open');
+    document.body.style.overflow = '';
+    if (burger) {
+      burger.querySelectorAll('span').forEach(b => { b.style.transform = ''; b.style.opacity = ''; });
+    }
+  }
+
+  // Delegate hamburger click on document so it works regardless of injection order
+  document.addEventListener('click', function _hamClick(e) {
+    const burger = e.target.closest('#hamburger');
+    if (!burger) return;
+    const drawer = document.getElementById('mob-drawer');
+    if (drawer?.classList.contains('open')) closeMobDrawer();
+    else openMobDrawer();
+  });
+
+  document.getElementById('mob-drawer-overlay')?.addEventListener('click', closeMobDrawer);
+  document.getElementById('mob-drawer-close')?.addEventListener('click', closeMobDrawer);
+
+  // Close drawer when any nav link is tapped
+  document.getElementById('mob-drawer')?.querySelectorAll('.mob-drawer-link, .mob-drawer-sub-link, .mob-drawer-logo, .mob-drawer-cta a').forEach(a => {
+    a.addEventListener('click', closeMobDrawer);
+  });
+
+  // ── Accordion groups ──
+  document.querySelectorAll('.mob-drawer-group-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const body     = document.getElementById(targetId);
+      const chevron  = btn.querySelector('.mob-drawer-chevron');
+      const isOpen   = body?.classList.contains('open');
+      // close all others
+      document.querySelectorAll('.mob-drawer-group-body').forEach(b => b.classList.remove('open'));
+      document.querySelectorAll('.mob-drawer-chevron').forEach(c => c.style.transform = '');
+      if (!isOpen) {
+        body?.classList.add('open');
+        if (chevron) chevron.style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+
+  // Highlight active link in drawer
+  mobDrawer?.querySelectorAll('.mob-drawer-link, .mob-drawer-sub-link').forEach(a => {
+    const href = a.getAttribute('href') || '';
+    if (href.endsWith(current) || (current === 'index.html' && href.endsWith('index.html'))) {
+      a.classList.add('active');
+    }
+  });
 
   Cart.badge();
 }
@@ -371,19 +429,11 @@ function navHTML(prefix='') {
           <i class="fa-regular fa-user"></i> Sign In
         </a>
       </div>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
+      <button class="hamburger" id="hamburger" aria-label="Open menu" data-drawer-open>
         <span></span><span></span><span></span>
       </button>
     </div>
-  </nav>
-  <div class="mobile-menu" id="mobile-menu">
-    <a href="${prefix}index.html">Home</a>
-    <a href="${prefix}pages/shop.html">Our Cats</a>
-    <a href="${prefix}pages/accessories.html">Accessories</a>
-    <a href="${prefix}pages/about.html">About</a>
-    <a href="${prefix}pages/contact.html">Contact</a>
-    <a href="${prefix}pages/login.html" style="color:var(--amber)">Sign In</a>
-  </div>`;
+  </nav>`;
 }
   
 function cartDrawerHTML(pages) {
@@ -404,6 +454,137 @@ function cartDrawerHTML(pages) {
       <a href="${PAGES}checkout.html" class="btn btn-primary btn-lg" style="width:100%; justify-content:center">
         Checkout <i class="fa-solid fa-arrow-right"></i>
       </a>
+    </div>
+  </aside>`;
+}
+
+function mobileDrawerHTML(prefix='') {
+  const p = prefix || (window.location.pathname.includes('/pages/') ? '../' : '');
+  const PAGES = p + 'pages/';
+  return `
+  <style id="mob-drawer-styles">
+    .mob-drawer-overlay{position:fixed;inset:0;z-index:1100;background:rgba(26,14,7,.55);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .35s cubic-bezier(.4,0,.2,1)}
+    .mob-drawer-overlay.open{opacity:1;pointer-events:all}
+    .mob-drawer{position:fixed;top:0;left:0;bottom:0;width:min(88vw,380px);z-index:1101;background:#FFFDF9;display:flex;flex-direction:column;transform:translateX(-100%);transition:transform .38s cubic-bezier(.4,0,.2,1);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+    .mob-drawer.open{transform:translateX(0);box-shadow:6px 0 60px rgba(44,24,16,.22)}
+    .mob-drawer-header{display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:68px;border-bottom:1px solid rgba(196,122,53,.18);background:#2C1810;flex-shrink:0}
+    .mob-drawer-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;letter-spacing:.2px;text-decoration:none}
+    .mob-drawer-logo i{color:#E8A45C;font-size:18px}
+    .mob-drawer-close{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);border:none;cursor:pointer;color:rgba(255,255,255,.7);font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .3s}
+    .mob-drawer-close:hover{background:rgba(255,255,255,.2);color:#fff}
+    .mob-drawer-user{display:flex;align-items:center;gap:14px;padding:18px 20px;background:#FDF0E0;border-bottom:1px solid rgba(196,122,53,.18);flex-shrink:0}
+    .mob-drawer-user-avatar{width:42px;height:42px;border-radius:50%;background:#2C1810;color:rgba(255,255,255,.6);font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .mob-drawer-user-name{font-size:13px;font-weight:700;color:#2C1810;letter-spacing:.2px;margin-bottom:2px}
+    .mob-drawer-user-action{font-size:12px;color:#C47A35;font-weight:600;text-decoration:none;display:block}
+    .mob-drawer-nav{display:flex;flex-direction:column;padding:12px 0 4px;flex-shrink:0}
+    .mob-drawer-link{display:flex;align-items:center;gap:14px;padding:13px 20px;font-size:14px;font-weight:600;color:#2C1810;letter-spacing:.2px;text-decoration:none;position:relative;transition:background .18s,color .18s}
+    .mob-drawer-link:hover,.mob-drawer-link.active{background:#FDF0E0;color:#C47A35}
+    .mob-drawer-link-icon{width:34px;height:34px;border-radius:8px;background:#FAF5EE;border:1px solid rgba(196,122,53,.18);display:flex;align-items:center;justify-content:center;font-size:13px;color:#C47A35;flex-shrink:0;transition:all .3s}
+    .mob-drawer-link:hover .mob-drawer-link-icon,.mob-drawer-link.active .mob-drawer-link-icon{background:#C47A35;color:#fff;border-color:#C47A35}
+    .mob-drawer-divider{height:1px;background:rgba(196,122,53,.18);margin:8px 20px;flex-shrink:0}
+    .mob-drawer-group{flex-shrink:0}
+    .mob-drawer-group-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 20px;background:none;border:none;cursor:pointer;font-size:12px;font-weight:700;color:#9C7559;letter-spacing:.8px;text-transform:uppercase;transition:all .3s;font-family:inherit}
+    .mob-drawer-group-toggle:hover{color:#C47A35;background:#FDF0E0}
+    .mob-drawer-chevron{font-size:11px;color:#9C7559;transition:transform .28s cubic-bezier(.4,0,.2,1)}
+    .mob-drawer-group-body{max-height:0;overflow:hidden;transition:max-height .32s cubic-bezier(.4,0,.2,1),opacity .25s;opacity:0;background:#FAF5EE;border-top:1px solid transparent}
+    .mob-drawer-group-body.open{max-height:400px;opacity:1;border-top-color:rgba(196,122,53,.18)}
+    .mob-drawer-sub-link{display:flex;align-items:center;gap:10px;padding:11px 20px 11px 28px;font-size:13px;font-weight:500;color:#5C3D2E;text-decoration:none;transition:background .15s,color .15s}
+    .mob-drawer-sub-link i{width:16px;text-align:center;color:#C47A35;font-size:12px;flex-shrink:0}
+    .mob-drawer-sub-link:hover{background:#FDF0E0;color:#2C1810}
+    .mob-drawer-sub-link.active{color:#C47A35;font-weight:700}
+    .mob-drawer-cta{padding:20px 20px 8px;flex-shrink:0}
+    .mob-drawer-footer{margin-top:auto;padding:20px 20px 28px;border-top:1px solid rgba(196,122,53,.18);flex-shrink:0}
+    .mob-drawer-socials{display:flex;gap:12px;margin-bottom:14px}
+    .mob-drawer-socials a{width:36px;height:36px;border-radius:50%;background:#F0E6D6;border:1px solid rgba(196,122,53,.18);display:flex;align-items:center;justify-content:center;font-size:13px;color:#9C7559;transition:all .3s;text-decoration:none}
+    .mob-drawer-socials a:hover{background:#C47A35;border-color:#C47A35;color:#fff}
+    .mob-drawer-footer-copy{font-size:11px;color:#9C7559;line-height:1.5}
+    @media(min-width:769px){.mob-drawer,.mob-drawer-overlay{display:none!important}}
+  </style>
+
+  <div class="mob-drawer-overlay" id="mob-drawer-overlay"></div>
+  <aside class="mob-drawer" id="mob-drawer" aria-label="Navigation menu" role="dialog" aria-modal="true">
+
+    <div class="mob-drawer-header">
+      <a href="${p}index.html" class="mob-drawer-logo">
+        <i class="fa-solid fa-paw"></i> HelloKitty
+      </a>
+      <button class="mob-drawer-close" id="mob-drawer-close" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="mob-drawer-user">
+      <div class="mob-drawer-user-avatar"><i class="fa-regular fa-user"></i></div>
+      <div>
+        <div class="mob-drawer-user-name">Welcome back</div>
+        <a href="${PAGES}login.html" class="mob-drawer-user-action">Sign in or create account →</a>
+      </div>
+    </div>
+
+    <nav class="mob-drawer-nav">
+      <a href="${p}index.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-solid fa-house"></i></span>Home
+      </a>
+      <a href="${PAGES}shop.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-solid fa-paw"></i></span>Our Cats
+      </a>
+      <a href="${PAGES}accessories.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-solid fa-tag"></i></span>Accessories
+      </a>
+      <a href="${PAGES}wishlist.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-regular fa-heart"></i></span>My Wishlist
+      </a>
+      <a href="${PAGES}checkout.html" class="mob-drawer-link">
+        <span class="mob-drawer-link-icon"><i class="fa-solid fa-bag-shopping"></i></span>Cart &amp; Checkout
+      </a>
+    </nav>
+
+    <div class="mob-drawer-divider"></div>
+
+    <div class="mob-drawer-group">
+      <button class="mob-drawer-group-toggle" data-target="group-company">
+        <span><i class="fa-solid fa-building" style="margin-right:10px;color:#C47A35"></i>Company</span>
+        <i class="fa-solid fa-chevron-down mob-drawer-chevron"></i>
+      </button>
+      <div class="mob-drawer-group-body" id="group-company">
+        <a href="${PAGES}about.html" class="mob-drawer-sub-link"><i class="fa-solid fa-circle-info"></i> About Us</a>
+        <a href="${PAGES}breeder-partners.html" class="mob-drawer-sub-link"><i class="fa-solid fa-handshake"></i> Breeder Partners</a>
+        <a href="${PAGES}careers.html" class="mob-drawer-sub-link"><i class="fa-solid fa-briefcase"></i> Careers</a>
+        <a href="${PAGES}press.html" class="mob-drawer-sub-link"><i class="fa-solid fa-newspaper"></i> Press</a>
+      </div>
+    </div>
+
+    <div class="mob-drawer-group">
+      <button class="mob-drawer-group-toggle" data-target="group-support">
+        <span><i class="fa-solid fa-headset" style="margin-right:10px;color:#C47A35"></i>Support</span>
+        <i class="fa-solid fa-chevron-down mob-drawer-chevron"></i>
+      </button>
+      <div class="mob-drawer-group-body" id="group-support">
+        <a href="${PAGES}faq.html" class="mob-drawer-sub-link"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+        <a href="${PAGES}contact.html" class="mob-drawer-sub-link"><i class="fa-solid fa-envelope"></i> Contact Us</a>
+        <a href="${PAGES}shipping.html" class="mob-drawer-sub-link"><i class="fa-solid fa-truck"></i> Shipping Info</a>
+        <a href="${PAGES}health-guarantee.html" class="mob-drawer-sub-link"><i class="fa-solid fa-shield-heart"></i> Health Guarantee</a>
+        <a href="${PAGES}returns.html" class="mob-drawer-sub-link"><i class="fa-solid fa-rotate-left"></i> Returns</a>
+        <a href="${PAGES}privacy-policy.html" class="mob-drawer-sub-link"><i class="fa-solid fa-lock"></i> Privacy Policy</a>
+      </div>
+    </div>
+
+    <div class="mob-drawer-divider"></div>
+
+    <div class="mob-drawer-cta">
+      <a href="${PAGES}login.html" class="btn btn-primary btn-lg" style="width:100%;justify-content:center;display:flex;align-items:center;gap:8px">
+        <i class="fa-regular fa-user"></i> Sign In / Register
+      </a>
+    </div>
+
+    <div class="mob-drawer-footer">
+      <div class="mob-drawer-socials">
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="#" aria-label="Twitter/X"><i class="fa-brands fa-x-twitter"></i></a>
+      </div>
+      <p class="mob-drawer-footer-copy">© 2026 HelloKitty Worldwide</p>
     </div>
   </aside>`;
 }
